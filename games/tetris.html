@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang='en'>
+<head>
+  <title>Tetris</title>
+  <meta charset='UTF-8'>
+  <!-- inentionally left the next line out to fit the whole page width on mobile devices -->
+  <!-- meta name='viewport' content='width=device-width, initial-scale=1.0' -->
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1'>
+  <meta name='author' content='Albert Lobo'>
+  <meta name='description' content='Personal Website'>
+  <meta name='keywords' content='Programming, Fractals, Games, Markets'>
+  <link rel='icon' type='image/png' href='/img/favicon.png' />
+  <script src='/js/script.js'></script>
+  <link rel='stylesheet' href='/css/style.css'>
+  
+  <link rel='stylesheet' href='/css/games/classic-tetris.css'>
+  <link rel='stylesheet' href='/css/games/tetris-leaderboard.css'>
+  
+  <script src='/js/js-utils.js'></script>
+  <script src='/js/games/classic-tetris.js'></script>
+  <script src='/js/games/tetris-leaderboard.js'></script>
+  <script src='/js/games/tetris-manager.js'></script>
+  
+  <script>
+  window.addEventListener('load', event => {
+    // initialize tetris game
+    const canvas = document.getElementById('tetris-canvas');
+    const tetris = new ClassicTetris(canvas, {
+      rotateSound: new Audio('/sound/tetris/rot.mp3'),
+      moveSound: new Audio('/sound/tetris/move.mp3'),
+      setSound: new Audio('/sound/tetris/set.mp3'),
+      gameOverSound: new Audio('/sound/tetris/gameover.mp3'),
+      lineSound: new Audio('/sound/tetris/line.mp3'),
+      tetrisSound: new Audio('/sound/tetris/tetris.mp3'),
+      levelChangeSound: new Audio('/sound/tetris/levelup.mp3'),
+      pauseSound: new Audio('/sound/tetris/pause.mp3'),
+      gameTheme: new Audio('/sound/tetris/korobeiniki.mp3')
+    });
+    const leaderboard = new TetrisLeaderboard();
+    const manager = new TetrisManager(tetris, leaderboard);
+  });
+  </script>
+</head>
+
+<body>
+  <div class='navbar-wrapper'>
+    <nav class='navbar' role='navigation'>
+      <a href='/'><div class='navbar-home'>Albert Lobo</div></a>
+      <div class='navbar-menu'>
+        <div id='general-nav' class='nav-item'>
+          <div class='i5'></div><a href='/general'>General</a>
+          <div id='general-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/general/animated-penrose-triangle'>Make an animated Penrose triangle in Javascript + HTML</a></div>
+          </div>
+        </div>
+        <div id='fractals-nav' class='nav-item'>
+          <div class='i5'></div><a href='/fractals'>Fractals</a>
+          <div id='fractals-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/fractals/buddhabrot-4d-viewer'>Buddhabrot 4D viewer</a></div>
+            <div class='nav-subitem'><a href='/fractals/buddhabrot-gallery'>Buddhabrot gallery</a></div>
+            <div class='nav-subitem'><a href='/fractals/mandelbrot-viewer'>Mandelbrot viewer</a></div>
+            <div class='nav-subitem'><a href='/fractals/interior-exterior-distance-bounds-mandelbrot-set'>Interior and exterior distance bounds for the Mandelbrot set</a></div>
+            <div class='nav-subitem'><a href='/fractals/async-await-requestanimationframe-buddhabrot'>Using javascript's async/await and requestAnimationFrame to paint the Buddhabrot</a></div>
+          </div>
+        </div>
+        <div id='games-nav' class='nav-item'>
+          <div class='i5'></div><a href='/games'>Games</a>
+          <div id='games-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/games/tetris'>Tetris</a></div>
+          </div>
+        </div>
+        <div id='markets-nav' class='nav-item'>
+          <div class='i5'></div><a href='/markets'>Markets</a>
+          <div id='markets-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/markets/adjusted-ohlc-values'>Calculating adjusted OHLC values</a></div>
+          </div>
+        </div>
+        <div class='nav-item'><div class='i5'></div><a href='/about'>About</a></div>
+      </div>
+    </nav>
+    </div>
+  <main class='main'>
+  <article class='main-text'>
+  
+    <div class='main-text-block main-text-title bgg'>
+      <div class='text-box'>
+        <h1>Tetris</h1>
+        <p class='article-date'>Updated October, 2019</p>
+      </div>
+    </div>
+    
+    <div class='tetris-box'>
+    <div class='tetris'>
+      <canvas id='tetris-canvas' class='canvas' width='520' height='600'></canvas>
+      <div class='tetris-controls'>
+        <label for='level-input' class='level-input-label'>Start level:</label>
+        <input id='level-input' name='level-input' type='number' min='0' max='19' value='5' class='level-input'></input>
+        <button id='start-stop-btn' class='play-btn control-btn' title='Play'></button>
+        <button id='quit-btn' class='quit-btn control-btn' title='Quit'></button>
+      </div>
+    </div>
+    </div>
+    
+    <div class='main-text-block bgw'>
+    <div class='text-box'>
+    
+    <p>My own implementation of the popular game <a href='https://en.wikipedia.org/wiki/Tetris'
+        target='_blank' rel='noopener noreferrer'>Tetris</a>.
+    Check it out on <a href='https://github.com/llop/classic-tetris-js'
+          target='_blank' rel='noopener noreferrer'>Github <img src='/img/home/github-inl.png' alt='Github' width='18' height='18'></img></a>!</p>
+        
+    <p>Choose your starting level (0 to 19, greater is faster) and hit the 'Play' button to start the game!</p>
+    <p>After the game is over, you can enter your score for the <a href='#top-500'>leaderboard</a> below.</p>
+    
+    <p class='b'>Keyboard controls:</p>
+    
+    <table class='table'>
+      <thead>
+      <tr class='table-header-row'>
+        <th class='table-header table-action-cell'>Action</th>
+        <th class='table-header'>Keys</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class='table-row'>
+        <td class='table-cell table-action-cell'>Move piece left</td>
+        <td class='table-cell'>Left arrow, A</td>
+      </tr>
+      <tr class='table-row'>
+        <td class='table-cell table-action-cell'>Move piece right</td>
+        <td class='table-cell'>Right arrow, D</td>
+      </tr>
+      <tr class='table-row'>
+        <td class='table-cell table-action-cell'>Move piece down</td>
+        <td class='table-cell'>Down arrow, S</td>
+      </tr>
+      <tr class='table-row'>
+        <td class='table-cell table-action-cell'>Rotate piece clockwise</td>
+        <td class='table-cell'>Up arrow, W, X, K</td>
+      </tr>
+      <tr class='table-row'>
+        <td class='table-cell table-action-cell'>Rotate piece anticlockwise</td>
+        <td class='table-cell'>Z, L</td>
+      </tr>
+      <tr class='table-row'>
+        <td class='table-cell table-action-cell'>Hard drop</td>
+        <td class='table-cell'>Space bar</td>
+      </tr>
+      <tr class='table-row'>
+        <td class='table-cell table-action-cell'>Pause</td>
+        <td class='table-cell'>ESC, P</td>
+      </tr>
+      </tbody>
+    </table>
+    
+    <p class='b'>Pointer device (mouse, touch screen, stylus pen) controls:</p>
+    
+    <table class='table'>
+      <thead>
+      <tr class='table-header-row'>
+        <th class='table-header table-action-cell'>Action</th>
+        <th class='table-header'>Pointer gesture</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class='table-row'>
+        <td class='table-cell table-action-cell'>Move piece left</td>
+        <td class='table-cell'>Move the pointer to the left of the piece</td>
+      </tr>
+      <tr class='table-row'>
+        <td class='table-cell table-action-cell'>Move piece right</td>
+        <td class='table-cell'>Move the pointer to the right of the piece</td>
+      </tr>
+      <tr class='table-row'>
+        <td class='table-cell table-action-cell'>Move piece down</td>
+        <td class='table-cell'>Place the pointer on the piece and move down</td>
+      </tr>
+      <tr class='table-row'>
+        <td class='table-cell table-action-cell'>Rotate piece clockwise</td>
+        <td class='table-cell'>Click / tap (left mouse button, touch contact, pen contact),<br/>wheel up</td>
+      </tr>
+      <tr class='table-row'>
+        <td class='table-cell table-action-cell'>Rotate piece anticlockwise</td>
+        <td class='table-cell'>Click / tap (mouse wheel, right mouse button, pen barrel button, X1 (back) mouse, X2 (forward) mouse, pen eraser button),<br/>wheel down</td>
+      </tr>
+      </tbody>
+    </table>
+    
+    </div>
+    </div>
+    
+    <!-- <br/>
+    <div id='top-500' name='top-500' class='main-text-block bgg talc fs22 b'>
+      <p>Top 500 scores</p>
+    </div>
+    
+    <div class='tetris-leaderboard'>
+    <div class='leaderboard-box'>
+      <div id='leaderboard-overlay' class='leaderboard-overlay'></div>
+      <table id='leaderboard' class='table'>
+        <thead>
+        <tr class='table-header-row'>
+          <th class='table-header leaderboard-header'>Rank</th>
+          <th class='table-header leaderboard-header'>#ID</th>
+          <th class='table-header leaderboard-header'>Score</th>
+          <th class='table-header leaderboard-header'>Lines</th>
+          <th class='table-header leaderboard-header'>Date <span class='fs12'>(mm-dd-yyyy)</span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class='table-row'>
+          <td class='table-cell leaderboard-cell'>&nbsp;</td>
+          <td class='table-cell leaderboard-cell'>&nbsp;</td>
+          <td class='table-cell leaderboard-cell'>&nbsp;</td>
+          <td class='table-cell leaderboard-cell'>&nbsp;</td>
+          <td class='table-cell leaderboard-cell'>&nbsp;</td>
+        </tr>
+        <tr class='table-row'><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td></tr>
+        <tr class='table-row'><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td></tr>
+        <tr class='table-row'><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td></tr>
+        <tr class='table-row'><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td></tr>
+        <tr class='table-row'><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td></tr>
+        <tr class='table-row'><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td></tr>
+        <tr class='table-row'><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td></tr>
+        <tr class='table-row'><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td></tr>
+        <tr class='table-row'><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td><td class='table-cell leaderboard-cell'>&nbsp;</td></tr>
+        </tbody>
+      </table>
+      <div class='leaderboard-controls'>
+        <button id='first-btn' class='first-btn leaderboard-btn' title='First'></button>
+        <button id='back-btn' class='back-btn leaderboard-btn' title='Back'></button>
+        <div id='page-txt' class='page-txt'>Page of </div>
+        <button id='forward-btn' class='forward-btn leaderboard-btn' title='Forward'></button>
+        <button id='last-btn' class='last-btn leaderboard-btn' title='Last'></button>
+        <button id='reload-btn' class='reload-btn leaderboard-btn' title='Reload'></button>
+        <div id='total-txt' class='total-txt'>Displaying to of scores</div>
+      </div>
+    </div>
+    </div> -->
+    
+    <div id='game-over-dialog' class='dialog'>
+      <div class='dialog-content'>
+        <div class='dialog-title'>Game Over</div>
+        <div class='dialog-body'>
+          <p>Well played!<br/>
+          Enter your score in the leaderboard!</p>
+          <p>Pick any number you like as your #ID</p>
+          <p>
+            <label for='name-input'>#ID: &nbsp;</label>
+            <input id='name-input' name='name-input' type='number' min='-9999999999' max='9999999999' /> <br/>
+            <span id='id-error-msg' class='error-msg'>Must be an integer number (-99999999 to 99999999)</span>
+          </p>
+          <p>
+            <label id='score-label'>Score: </label><br/>
+            <label id='lines-label'>Lines: </label>
+          </p>
+        </div>
+        <div class='dialog-buttons'>
+          <button id='enter-score-btn' class='dialog-btn enter-score-btn'>Enter score</button>
+          <button id='game-over-cancel-btn' class='dialog-btn cancel-btn'>Cancel</button>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div id='hiscore-dialog' class='dialog'>
+      <div class='dialog-content'>
+        <div class='dialog-title'>Hi-Score!</div>
+        <div class='dialog-body talc'>
+          <p>Congratulations, <span id='hiscore-name-label' class='b'></span>!<br/>
+          You are a Tetris master!</p>
+          <p><img src='/img/games/tetris/gcup.png' alt='Gold Cup'></p>
+          <p><label id='rank-label' class='fs20'>Rank </label></p>
+          <p><label id='hiscore-label'>Score: </label><br/>
+          <label id='hiscore-lines-label'>Lines: </label></p>
+          <p>Check out the leaderboard below!</p>
+        </div>
+        <div class='dialog-buttons'>
+          <button id='hiscore-btn' class='dialog-btn hiscore-btn'>Great</button>
+        </div>
+      </div>
+    </div>
+  
+  </article>
+  
+  <div class='main-footer bgg'>
+    <a href='/'><img src='/img/home/footer-mii.png' alt='Mii' title='Home' class='rnd-img bgw marlr10' width='60' height='60'></img></a>
+    <a id='email-link' href='#' target='_blank' rel='noopener noreferrer'>
+        <img src='/img/home/gmail.png' alt='Gmail Albert Lobo' title='Gmail Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+    <a href='https://www.linkedin.com/in/albert-lobo' target='_blank' rel='noopener noreferrer'>
+        <img src='/img/home/linkedin.png' alt='LinkedIn Albert Lobo' title='LinkedIn Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+    <a href='https://github.com/llop' target='_blank' rel='noopener noreferrer'>
+        <img src='/img/home/github.png' alt='GitHub Albert Lobo' title='GitHub Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+    <a href='https://www.npmjs.com/~llop' target='_blank' rel='noopener noreferrer'>
+        <img src='/img/home/npm-sml.png' alt='npm Albert Lobo' title='npm Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+    <a href='https://codeforces.com/profile/Llop' target='_blank' rel='noopener noreferrer'>
+        <img src='/img/home/codeforces.png' alt='Codeforces Albert Lobo' title='Codeforces Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+    <a href='https://www.youtube.com/user/albertlobo1981' target='_blank' rel='noopener noreferrer'>
+        <img src='/img/home/youtube.png' alt='YouTube Albert Lobo' title='YouTube Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+    <a href='http://www.smalltalkhub.com/#!/~Llop' target='_blank' rel='noopener noreferrer'>
+        <img src='/img/home/smalltalkhub.png' alt='SmalltalkHub Albert Lobo' title='SmalltalkHub Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+  </div> 
+  </main>
+</body>
+</html>
+
+
+
+
+

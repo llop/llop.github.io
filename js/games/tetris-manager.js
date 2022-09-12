@@ -182,13 +182,15 @@ class TetrisManager {
     this.idErrorMsg.style.display = 'none';
     
     if ((event.keyCode || event.which) == 13) {   // enter pressed
-      this._sendScore();
+      // this._sendScore();
+      this._closeGameOverDialog();
     }
   }
   
   _enterScoreBtnClickHandler = event => {
     // try to upload score
-    this._sendScore();
+    // this._sendScore();
+    this._closeGameOverDialog();
   }
   
   _gameOverCancelBtnClickHandler = event => {

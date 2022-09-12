@@ -1,0 +1,201 @@
+
+.tetris-box {
+  text-align: center;
+  background-color: #00043c;
+  user-select: none;
+}
+
+.tetris {
+  margin: 0 auto;
+  display: table;
+}
+
+.tetris-controls {
+  padding: 0px 65px 20px 65px;
+  text-align: left;
+}
+
+.level-input-label {
+  color: #fff;
+  vertical-align: top;
+  display: inline-block;
+  margin-top: 15px;
+}
+
+.level-input {
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #223c65;
+  vertical-align: top;
+  margin-top: 5px;
+}
+
+.btn:hover,
+.btn:focus,
+.btn:active {
+  background-color: #bee5f9;
+  color: #000;
+  text-shadow: 3px 3px 1px #d4d4d4;
+}
+
+
+.dialog {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.dialog-content {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  display: table; 
+  margin: 0 auto;
+  min-width: 400px;
+  min-height: 360px;
+  background-color: #fff;
+  border-radius: 10px;
+  border: 4px solid #2a5886;
+}
+
+.dialog-title {
+  font-weight: bold;
+  font-size: 22px;
+  text-align: center;
+  background-image: linear-gradient(141deg, #1f52af, #7bbdff);
+  margin-top: 20px;
+  color: #fff;
+  padding: 20px 0px;
+}
+
+.dialog-body {
+  padding: 10px 0px;
+  margin: 5px 60px;
+}
+
+.dialog-buttons {
+  border-top: 1px solid #aaa;
+  padding: 15px 40px 0px 40px;
+  text-align: right;
+  margin-bottom: 15px;
+}
+
+.dialog-btn {
+  font-family: georgia, serif;
+  font-size: 17px;
+  border-radius: 5px;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid #223c65;
+  color: #001e4c;
+  -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  padding: 10px 20px;
+}
+
+.enter-score-btn {
+  background-color: #7bbdff;
+}
+
+.cancel-btn {
+  background-color: #bbb;
+}
+
+.enter-score-btn:hover {
+  background-color: #5facf9;
+}
+
+.enter-score-btn:focus,
+.enter-score-btn:active {
+  background-color: #5facf9;
+}
+
+.cancel-btn:hover {
+  background-color: #a7a7a7;
+}
+
+.cancel-btn:focus,
+.cancel-btn:active {
+  background-color: #a7a7a7;
+}
+
+
+.hiscore-btn {
+  background-color: #7bbdff;
+}
+
+.hiscore-btn:hover {
+  background-color: #5facf9;
+}
+
+.hiscore-btn:focus,
+.hiscore-btn:active {
+  background-color: #5facf9;
+}
+
+
+.dialog-btn:hover {
+  color: #000;
+  text-shadow: 3px 3px 1px #d4d4d4;
+}
+
+.dialog-btn:focus,
+.dialog-btn:active {
+  color: #000;
+  text-shadow: 3px 3px 1px #d4d4d4;
+}
+
+
+.error-msg {
+  color: red; 
+  font-size: 12px; 
+  display: none;
+}
+
+.error-input {
+  border: 2px solid red;
+}
+
+.control-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+}
+
+.control-btn:hover {
+  background-color: #7caefb;
+}
+
+.control-btn:focus,
+.control-btn:active {
+  background-color: #5190f3;
+  outline: 0;
+}
+
+.play-btn {
+  background: rgb(255, 255, 255) url('/img/games/tetris/play-btn.png') center center no-repeat;
+  margin: 0px 20px 0px 15px;
+}
+
+.pause-btn {
+  background: rgb(255, 255, 255) url('/img/games/tetris/pause-btn.png') center center no-repeat;
+  margin: 0px 20px 0px 15px;
+}
+
+.quit-btn {
+  background: rgb(255, 255, 255) url('/img/games/tetris/quit-btn.png') center center no-repeat;
+  margin-left: 20px;
+}
+
+
+.table-action-cell {
+  width: 25%;
+}
+
+
+

@@ -1,0 +1,405 @@
+/* 
+ * html tag overrides
+ */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  color: #223c65;
+  font-size: 17px;
+  font-family: georgia, serif;
+}
+
+body {
+  margin: 0 auto;
+  height: 100%;
+  background-color: #1fc8db;
+  background-image: linear-gradient(-141deg, #b0dcf3 5%, #b09bc3 95%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  opacity: 0.95;
+  max-width: 1200px;
+}
+
+.navbar a:link, .navbar a:visited, .navbar a:hover, .navbar a:active {
+  color: #223c65;
+  text-decoration: none;
+}
+
+
+a:link, a:visited, a:hover, a:active {
+  color: #560e8c;
+  text-decoration: none;
+}
+
+.navbar a:hover, a:hover {
+  color: #000;
+  text-shadow: 3px 3px 1px #d4d4d4;
+}
+
+input {
+  font-family: georgia, serif;
+  font-size: 17px;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+
+/* 
+ * nav bar
+ */
+.navbar-wrapper {
+  margin: 0 auto;
+  min-width: 1000px;
+  padding: 5px 0px 0px 0px; 
+}
+
+.navbar {
+  height: 35px;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 15px 40px;
+  box-sizing: content-box;
+}
+
+.navbar-home {
+  font-size: 32px;
+  font-weight: bold;
+  float: left;
+  text-shadow: 3px 3px 1px #d4d4d4;
+}
+
+.navbar-menu {
+  float: right;
+  padding: 10px 0px;
+}
+
+.nav-item {
+  float: left;
+  overflow: hidden;
+  padding-right: 20px;
+}
+
+.nav-subitem {
+  padding: 10px 20px;
+}
+
+.nav-dropdown {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: rgba(255, 255, 255, .9);
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
+  z-index: 1;
+}
+
+
+
+/* 
+ * custom button
+ */
+.button {
+  background-color: #fff;
+  border: 1px solid #223c65;
+  font-family: georgia, serif;
+  font-size: 17px;
+  color: #223c65;
+  padding: 10px 20px;
+  text-align: center;
+  display: inline-block;
+  -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  border-radius: 5px;
+}
+
+.button:hover {
+  background-color: #bee5f9;
+  color: #000;
+  text-shadow: 3px 3px 1px #d4d4d4;
+}
+
+.button:focus,
+.button:active {
+  background-color: #bee5f9;
+  color: #000;
+  text-shadow: 3px 3px 1px #d4d4d4;
+}
+
+
+
+/* 
+ * custom table
+ */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-header-row {
+  background-color: #acc9e2;
+}
+
+.table-row {
+  background-color: #fff;
+}
+
+.table-row:nth-child(even) {
+  background-color: #dee4ef;
+}
+
+.table-cell {
+  border: 1px solid #c1d6f7;
+  padding: 10px 20px;
+  vertical-align: top;
+}
+
+.table-header {
+  border: 1px solid #c1d6f7;
+  padding: 10px 20px;
+  vertical-align: top;
+}
+
+
+
+/* 
+ * main content
+ */
+.main {
+  margin: 5px auto;
+  min-width: 1000px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.main-text {
+  font-size: 17px;
+  padding-top: 20px;
+  padding-bottom: 60px;
+}
+
+.main-text-title {
+  margin: 10px 0px 20px 0px;
+}
+
+.article-date {
+  font-size: 15px;
+  font-style: italic;
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+
+.main-text-block {
+  padding: 20px 0px;
+  position: relative;
+}
+
+.text-box {
+  padding: 0px 60px;
+  text-align: justify;
+}
+
+.code {
+  font-size: 16px;
+}
+
+
+.block-table {
+  margin: 0 auto;
+  border-spacing: 40px;
+  border-collapse: separate;
+}
+
+.block-td {
+  width: 360px;
+  background-color: #fff;
+  border-radius: 10px;
+  color: #223c65; 
+  padding: 20px 10px;
+}
+
+
+/* 
+ * backgrounds
+ */
+.bgw {
+  background-color: #fff;
+}
+
+.bgg {
+  background-image: linear-gradient(141deg, #1f52af, #7bbdff);
+  background-color: #2a5886; 
+  color: #fff;
+}
+
+
+/* 
+ * footer style
+ */
+.main-footer {
+  text-align: center;
+  padding: 40px 60px;
+  border-radius: 0px 0px 10px 10px;
+}
+
+
+/* 
+ * mii image stuff
+ */
+.mii-img  {
+  position: absolute;
+  top: 20px;
+  left: 20%;
+  border-radius: 10px;
+}
+
+.mii-img-div {
+  height: 250px;
+  padding-top: 60px;
+  min-width: 1000px;
+}
+
+.wife-mii-img {
+  float: right; 
+  margin-left: 80px;
+}
+
+
+/* 
+ * images
+ */
+.rnd-img  {
+  border-radius: 50%;
+}
+
+
+/* 
+ * about
+ */
+.about-top-box {
+  min-height: 208px;
+}
+
+
+
+/* 
+ * helper styles
+ */
+.sep {
+  height: 20px;
+}
+
+.bsep {
+  height: 60px;
+}
+
+.i5 {
+  float: left;
+  display: inline;
+  width: 10px;
+  height: 10px;
+}
+
+
+/* 
+ * font: bold, italic
+ */
+.b {
+  font-weight: bold;
+}
+
+.i {
+  font-style: italic;
+}
+
+
+/* 
+ * font sizes
+ */
+.fs22 {
+  font-size: 22px;
+}
+.fs20 {
+  font-size: 20px;
+}
+.fs18 {
+  font-size: 18px;
+}
+.fs16 {
+  font-size: 16px;
+}
+.fs14 {
+  font-size: 14px;
+}
+.fs12 {
+  font-size: 12px;
+}
+.fs0 {
+  font-size: 0;
+}
+
+
+/* 
+ * text aligns
+ */
+.talc {
+  text-align: center;
+}
+.tall {
+  text-align: left;
+}
+.talr {
+  text-align: right;
+}
+.talj {
+  text-align: justify;
+}
+
+
+/* 
+ * padding
+ */
+.padlr40 {
+  padding: 0px 40px;
+}
+
+.padlr10 {
+  padding: 0px 10px;
+}
+
+.padlr5 {
+  padding: 0px 10px;
+}
+
+
+/* 
+ * margin
+ */
+.marlr10 {
+  margin: 0px 10px;
+}
+
+
+/* 
+ * displays
+ */
+.dib {
+  display: inline-block;
+}
+
+
+
+/* 
+ * regular box-sizing -EasyUI sets that as default :(
+ */
+.bscb {
+  box-sizing: content-box;
+}
+

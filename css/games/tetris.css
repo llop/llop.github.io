@@ -1,0 +1,170 @@
+.tetris {
+  background-color: #aaa;
+  background-image: linear-gradient(141deg, #7bbdff, #1f52af);;
+  border-radius: 10px;
+}
+
+.tetris-title {
+  margin: 40px 50px 10px 50px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #fff;
+  border-radius: 10px;
+  top: 820px;
+}
+
+.tetris-desc {
+  padding: 20px 50px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+
+.tetris-controls {
+  height: 60px;
+  text-align: center;
+}
+
+.tetris-box {
+  padding-top: 20px;
+  margin: 0 auto;
+  width: 520px;
+  height: 680px;
+}
+
+.start-label {
+  color: #fff;
+}
+
+.canvas {
+  /** background-color: #ccc; **/
+}
+
+.spinner {
+  width: 60px; 
+}
+
+.start-stop-btn {
+  margin-left: 20px;
+  width: 125px;
+}
+
+
+
+.tetris-leaderboard {
+  padding: 20px 60px 0px 60px;
+  background-color: #fff;
+  border-radius: 10px;
+  text-align: center;
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.leaderboard {
+  
+  
+}
+
+
+.error-input {
+  border: 2px solid red;
+}
+
+.leaderboard-table {
+  margin: 0 auto;
+}
+
+.gameover-dialog {
+  display: none;
+}
+
+.gameover-content {
+  padding: 10px 25px 10px 25px;
+}
+
+.gameover-row {
+  padding: 10px 0px;
+}
+
+.rank-row {
+  font-size: 22px;
+  font-weight: bold;
+  padding: 30px 0px 10px 0px;
+}
+
+.enter-score {
+  display: none;
+  padding-top: 10px;
+}
+
+.error-msg {
+  color: red; 
+  font-size: 12px; 
+  display: none;
+}
+
+
+.hiscore-dialog {
+  display: none;
+  text-align: center;
+}
+
+.window {
+  background-color: #fff;
+  background: #fff;
+  border: none;
+  border-radius: 0px;
+}
+
+.window .window-body {
+  border: 0;
+}
+
+.panel-title {
+  font-size: 20px;
+  padding: 10px 15px;
+  height: 35px;
+}
+
+.panel-body {
+  font-size: 17px;
+  color: #223c65;
+}
+
+.panel {
+  margin: 0 auto;
+}
+
+
+.dialog-button {
+  text-align: center;
+  border-width: 1px 0px 0px 0px;
+}
+
+.textbox .textbox-text {
+  font-size: 17px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,70 @@
+.mandelbrot {
+  border-radius: 10px;
+  background-color: #ddd;
+  text-align: center;
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.canvas {
+  border-radius: 10px;
+}
+
+.btn-group {
+  background-color: #ddd;
+  border-radius: 10px;
+  padding: 5px 40px 10px 40px;
+}
+
+.iter-inp {
+  width: 120px;
+  height: 30px;
+}
+
+
+.zoom-in-btn {
+  background: #fff url('/img/fractals/zoom-in.png') no-repeat right top;
+  width: 40px;
+}
+
+.zoom-out-btn {
+  background: #fff url('/img/fractals/zoom-out.png') no-repeat right top;
+  width: 40px;
+}
+
+.color-select {
+  font-family: georgia, serif;
+  font-size: 17px;
+  color: #223c65;
+  border-radius: 5px;
+  height: 40px;
+}
+
+.repaint-btn {
+  margin-left: 20px;
+  margin-right: 110px;
+}
+
+.reset-btn {
+  margin-left: 120px;
+  margin-right: 20px;
+}
+
+.mandel-title {
+  margin: 25px 50px 10px 50px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.mandel-desc {
+  padding: 20px 50px 40px 50px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.mandelbrot-params {
+  font-size: 15px;
+  background-color: #ddd;
+  padding: 5px 30px 5px 30px;
+}

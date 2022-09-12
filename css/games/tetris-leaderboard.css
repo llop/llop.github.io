@@ -1,0 +1,80 @@
+
+.leaderboard-box {
+  position: relative;
+}
+
+.leaderboard-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgb(255, 255, 255, 0.6) url('/img/games/loading.gif') center center no-repeat;
+  display: none;
+}
+
+
+.leaderboard-cell {
+  text-align: center;
+}
+
+.leaderboard-header {
+  vertical-align: top;
+}
+
+
+.leaderboard-controls {
+  width: 100%;
+  border: 1px solid #c1d6f7;
+  padding: 10px 40px;
+  border-top: 0;
+  text-align: left;
+}
+
+.leaderboard-btn {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  cursor: pointer;
+  vertical-align: top;
+  background-color: #fff;
+}
+
+.leaderboard-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.first-btn {
+  background-image: url('/img/games/first-btn.png');
+  background-repeat: no-repeat;
+}
+.last-btn {
+  background-image: url('/img/games/last-btn.png');
+  background-repeat: no-repeat;
+}
+.forward-btn {
+  background-image: url('/img/games/forward-btn.png');
+  background-repeat: no-repeat;
+}
+.back-btn {
+  background-image: url('/img/games/back-btn.png');
+  background-repeat: no-repeat;
+}
+.reload-btn {
+  background-image: url('/img/games/reload-btn.png');
+  background-repeat: no-repeat;
+  margin: 0px 20px;
+}
+
+.page-txt {
+  display: inline-block;
+  margin: 0px 20px;
+  vertical-align: top;
+}
+.total-txt {
+  display: inline-block;
+  float: right;
+  vertical-align: top;
+}
+

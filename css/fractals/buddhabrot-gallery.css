@@ -1,0 +1,38 @@
+
+.gallery-table {
+  border-collapse: collapse;
+  border-spacing: 20px;
+  text-align: center;
+  display: table;
+  margin: 0 auto;
+}
+
+.gallery-table-row {
+  display: table-row;
+  text-align: center;
+}
+
+.gallery-table-cell {
+  border: 1px solid #a5bce0;
+  padding: 10px 20px;
+  vertical-align: top;
+  display: table-cell;
+  text-align: center;
+}
+
+.gallery-figure {
+  margin: 0;
+}
+
+.gallery-figure-box {
+  border: 1px solid #a5bce0;
+  padding: 10px 20px;
+  text-align: center;
+  display: table;
+  margin: 0 auto;
+}
+
+.video-box {
+  background: #000; 
+  text-align: center;
+}

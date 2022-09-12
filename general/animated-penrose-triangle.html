@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang='en'>
+<head>
+  <title>Make an animated Penrose triangle in Javascript + HTML</title>
+  <meta charset='UTF-8'>
+  <!-- inentionally left the next line out to fit the whole page width on mobile devices -->
+  <!-- meta name='viewport' content='width=device-width, initial-scale=1.0' -->
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1'>
+  <meta name='author' content='Albert Lobo'>
+  <meta name='description' content='Personal Website'>
+  <meta name='keywords' content='Programming, Fractals, Games, Markets'>
+  <link rel='icon' type='image/png' href='/img/favicon.png' />
+  <script src='/js/script.js'></script>
+  <link rel='stylesheet' href='/css/style.css'>
+  <link rel='stylesheet' href='/js/highlightjs/styles/hybrid.css'>
+  <script src='/js/highlightjs/highlight.pack.js'></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src='/js/general/penrose-triangle.js'></script>
+  <script>
+  window.addEventListener('load', event => {
+    const canvas = document.getElementById('penrose-canvas');
+    const penroseTriangle = new PenroseTrinagle(canvas, {
+      triangleEdge: 200,
+      cubeEdge: 20,
+      lineWidth: 2
+    });
+    penroseTriangle.start();
+  });
+  </script>
+</head>
+
+<body>
+  <div class='navbar-wrapper'>
+    <nav class='navbar' role='navigation'>
+      <a href='/'><div class='navbar-home'>Albert Lobo</div></a>
+      <div class='navbar-menu'>
+        <div id='general-nav' class='nav-item'>
+          <div class='i5'></div><a href='/general'>General</a>
+          <div id='general-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/general/animated-penrose-triangle'>Make an animated Penrose triangle in Javascript + HTML</a></div>
+          </div>
+        </div>
+        <div id='fractals-nav' class='nav-item'>
+          <div class='i5'></div><a href='/fractals'>Fractals</a>
+          <div id='fractals-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/fractals/buddhabrot-4d-viewer'>Buddhabrot 4D viewer</a></div>
+            <div class='nav-subitem'><a href='/fractals/buddhabrot-gallery'>Buddhabrot gallery</a></div>
+            <div class='nav-subitem'><a href='/fractals/mandelbrot-viewer'>Mandelbrot viewer</a></div>
+            <div class='nav-subitem'><a href='/fractals/interior-exterior-distance-bounds-mandelbrot-set'>Interior and exterior distance bounds for the Mandelbrot set</a></div>
+            <div class='nav-subitem'><a href='/fractals/async-await-requestanimationframe-buddhabrot'>Using javascript's async/await and requestAnimationFrame to paint the Buddhabrot</a></div>
+          </div>
+        </div>
+        <div id='games-nav' class='nav-item'>
+          <div class='i5'></div><a href='/games'>Games</a>
+          <div id='games-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/games/tetris'>Tetris</a></div>
+          </div>
+        </div>
+        <div id='markets-nav' class='nav-item'>
+          <div class='i5'></div><a href='/markets'>Markets</a>
+          <div id='markets-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/markets/adjusted-ohlc-values'>Calculating adjusted OHLC values</a></div>
+          </div>
+        </div>
+        <div class='nav-item'><div class='i5'></div><a href='/about'>About</a></div>
+      </div>
+    </nav>
+    </div>
+  <main class='main'>
+    
+    <article class='main-text'>
+      <div class='main-text-block main-text-title bgg'>
+        <div class='text-box'>
+          <h1>Make an animated Penrose triangle in Javascript + HTML</h1>
+          <p class='article-date'>Updated September, 2022</p>
+        </div>
+      </div>
+      <div class='main-text-block bgw'>
+        <div class='text-box'>    
+          <div class='talc'>
+          <canvas id='penrose-canvas' class='canvas' width='300' height='250'></canvas>
+          </div>
+          
+          <p>I created this project to learn a bit about the HTML <code>canvas</code>.
+          Check it out on <a href='https://github.com/llop/penrose-triangle-js' 
+              target='_blank' rel='noopener noreferrer'>Github <img src='/img/home/github-inl.png' alt='Github' width='18' height='18'></img></a>!</p>
+              
+          <p>You may also want to <a href='https://www.newworldencyclopedia.org/entry/Penrose_triangle'
+              target='_blank' rel='noopener noreferrer'>read more about the Penrose triangle</a>.</p>    
+              
+          
+          <p>Let's do the layout first.
+          We'll place the triangle in a square area inside the canvas and figure out some of the parameters.</p>
+          
+          <p class='talc'><img src='/img/penrose/layout.png' alt='layout' width='749' height='398'></img></p>
+          
+          <p>For this example, the canvas size will be 400x350. Initialization code for the HTML page:</p>
+          <pre><code class='html code'>
+  &lt;canvas id='penrose-canvas' width='400' height='350'&gt;&lt;/canvas&gt;
+          </code></pre>
+          <br/>
+          
+          <p class='b'>The <code>PenroseTriangle</code> class</p>
+          
+          <p>Let's create a class <code>PenroseTriangle</code> to handle everything.</p>
+          
+          <pre><code class='javascript code'>
+  'use strict';
+
+  class PenroseTrinagle {}
+          </code></pre>
+          
+          <p>Its constructor will take the canvas and an options object for custom configuration.
+          We'll provide the following configuration parameters:</p>
+          
+          <ul>
+            <li><code>triangleEdge</code>: length of triangle's edge in pixels.</li>
+            <li><code>cubeEdge</code>: length of cube's edge in pixels.</li>
+            <li><code>cubesPerTriangleEdge</code>: # of cubes per triangle edge.</li>
+            <li><code>padding</code>: top and left padding in pixels.</li>
+            <li><code>loopFrames</code>: # of frames per loop.</li>
+            <li><code>lineWidth</code>: cube line's width in pixels.</li>
+            <li><code>lineColor</code>: cube line's color.</li>
+            <li><code>cubeColors</code>: colors for the cube's visible faces.</li>
+          </ul>
+          
+          <pre><code class='javascript code'>
+  constructor(canvas, {
+      triangleEdge = 300,
+      cubeEdge = 30,
+      cubesPerTriangleEdge = 6,
+      padding = [ 50.5, 0.5 ],
+      loopFrames = 100,
+      lineWidth = 3,
+      lineColor = '#0041a3',
+      cubeColors = [ '#4f9bf7', '#c0d8fc', '#87b7ff' ]
+    } = {}) {
+      
+    // set options
+    this.triangleEdge = triangleEdge;
+    this.cubeEdge = cubeEdge;
+    this.cubesPerTriangleEdge = cubesPerTriangleEdge;
+    this.padding = [ padding[0], padding[1] ];
+    this.loopFrames = loopFrames;
+    this.lineWidth = lineWidth;
+    this.lineColor = lineColor;
+    this.cubeColors = [ cubeColors[0], cubeColors[1], cubeColors[2] ];
+    
+    // prepare graphics context
+    this.canvas = canvas;
+    this.context = this.canvas.getContext('2d');
+    this.context.lineJoin = 'round';
+    this.context.lineWidth = this.lineWidth;
+    this.context.strokeStyle = this.lineColor;
+    
+    // precalculate lengths and cube coordinates
+    this.triangleHeight = this.triangleEdge * Math.sqrt(3) / 2;
+    this.ch = this.cubeEdge * Math.sqrt(3) / 2;
+    this.chb = this.cubeEdge / 2;
+    this.calculateCubesCoords();
+    
+    // start at frame 0
+    this.frame = 0;
+  }
+          </code></pre>
+          
+          <p>What the constructor does is set instance variables, prepare the graphics context, and do some precalculations to make the render faster.</p>
+          <br/>
+          
+          <p class='b'>The illusion</p>
+          
+          <p>To create a convincing optical illusion, we want the cubes to overlap. So, we need to draw them in order.
+          However, if we do that, the last cube will overlap the first one in a way that breaks the effect.</p>
+          
+          <p class='talc'><img src='/img/penrose/cubes-bad.png' alt='Bad cubes' width='300' height='113'></img></p>
+          
+          <p>To fix this, we can just draw the overlapping side of the last cube first.</p>
+          
+          <p class='talc'><img src='/img/penrose/cubes-good.png' alt='Good cubes' width='300' height='124'></img></p>
+          
+          <pre><code class='javascript code'>
+  // calcultes coordinates for the cubes with the established parameters
+  calculateCubesCoords() {
+    // triangle vertices
+    let va = [                                           // bottom-left
+        this.padding[0], 
+        this.triangleEdge + this.padding[1] 
+      ];                      
+    let vb = [                                           // bottom-right
+        this.triangleEdge + this.padding[0], 
+        this.triangleEdge + this.padding[1] 
+      ];  
+    let vc = [                                           // top
+        this.triangleEdge / 2.0 + this.padding[0], 
+        this.triangleEdge - this.triangleHeight + this.padding[1] 
+      ];  
+  
+    let minc = this.cubesPerTriangleEdge * this.loopFrames;
+    this.finc = this.triangleEdge / minc;   // length increment for a frame
+    this.vinc1 = [                          // increment vector along the right edge
+        (vc[0] - vb[0]) / minc, 
+        (vc[1] - vb[1]) / minc 
+      ];
+    this.vinc2 = [                          // vector increment along the left edge
+        (va[0] - vc[0]) / minc, 
+        (va[1] - vc[1]) / minc 
+      ];
+    
+    // cubes' coordinates
+    this.cubeMid = ((this.cubesPerTriangleEdge - 1) / 2) | 0;         // the 1st cube to draw
+    let inc = this.triangleEdge / this.cubesPerTriangleEdge;          // separation between cubes
+    this.v = new Float64Array(6 * this.cubesPerTriangleEdge);         // coordinates array
+    this.vt = new Float64Array(6 * this.cubesPerTriangleEdge);        // coords array for render
+    let j = 0;
+    for (let i = this.cubeMid; i < this.cubesPerTriangleEdge; ++i) {  // bottom-right
+      this.v[j++] = va[0] + inc * i;
+      this.v[j++] = va[1];
+    }
+    let vdir = [                                      // right edge Euclidean vector
+        (vc[0] - vb[0]) / this.cubesPerTriangleEdge, 
+        (vc[1] - vb[1]) / this.cubesPerTriangleEdge 
+      ];
+    for (let i = 0; i < this.cubesPerTriangleEdge; ++i) {             // right edge
+      this.v[j++] = vb[0] + vdir[0] * i;
+      this.v[j++] = vb[1] + vdir[1] * i;  
+    }
+    vdir = [                                          // left edge vector
+        (va[0] - vc[0]) / this.cubesPerTriangleEdge, 
+        (va[1] - vc[1]) / this.cubesPerTriangleEdge 
+      ];
+    for (let i = 0; i < this.cubesPerTriangleEdge; ++i) {             // left edge
+      this.v[j++] = vc[0] + vdir[0] * i;
+      this.v[j++] = vc[1] + vdir[1] * i;
+    }
+    for (let i = 0; i < this.cubeMid; ++i) {                          // bottom-left
+      this.v[j++] = va[0] + inc * i;
+      this.v[j++] = va[1];
+    }
+  }
+          </code></pre>
+          
+          <p><code>calculateCubesCoords</code> essentially calculates the coordinates of each cube's center point, in the order we want to paint them.</p>
+          <br/>
+          
+          <p class='b'>The animation</p>
+          
+          <p>Every time we ask the <code>PenroseTriangle</code> to repaint, its cubes will also move along their path. 
+          So the <code>render</code> function will look like this:</p>
+          
+          <pre><code class='javascript code'>
+  render() {
+    // calculate cube positions 
+    this.updateCubesPositions();
+    
+    // clear canvas and draw
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.drawTriangle();
+    
+    // increment current frame
+    if (++this.frame == this.loopFrames) this.frame = 0;
+  }
+          </code></pre>
+          
+          <p>We also need a way to start the render loop:</p>
+          
+          <pre><code class='javascript code'>
+  // 'renderLoop(timestamp)' is invoked at every repaint
+  renderLoop = timestamp => {
+    this.render();
+    requestAnimationFrame(this.renderLoop);
+  }
+  
+  // call 'start()' to begin the animation
+  start() {
+    requestAnimationFrame(this.renderLoop);
+  }
+          </code></pre>
+          
+          <p>The rest of the functions are just auxiliary; I'd make them private if javascript provided a good way.</p>
+          
+          <pre><code class='javascript code'>
+  // calculate cubes' positions for the current frame
+  updateCubesPositions() {
+    // length increments for current frame
+    let inc = this.finc * this.frame;
+    let inc1X = this.vinc1[0] * this.frame;
+    let inc1Y = this.vinc1[1] * this.frame;
+    let inc2X = this.vinc2[0] * this.frame;
+    let inc2Y = this.vinc2[1] * this.frame;
+    
+    let j = 0;
+    for (let i = this.cubeMid; i < this.cubesPerTriangleEdge; ++i) {  // bottom-right
+      this.vt[j] = this.v[j++] + inc;
+      this.vt[j] = this.v[j++];
+    }
+    for (let i = 0; i < this.cubesPerTriangleEdge; ++i) {             // right edge
+      this.vt[j] = this.v[j++] + inc1X;
+      this.vt[j] = this.v[j++] + inc1Y;
+    }
+    for (let i = 0; i < this.cubesPerTriangleEdge; ++i) {             // left edge
+      this.vt[j] = this.v[j++] + inc2X;
+      this.vt[j] = this.v[j++] + inc2Y;   
+    }  
+    for (let i = 0; i < this.cubeMid; ++i) {                          // bottom-left
+      this.vt[j] = this.v[j++] + inc;
+      this.vt[j] = this.v[j++];          
+    }
+  }
+  
+  // draw the triangle
+  drawTriangle() {
+    this.drawCubePart1(this.vt[0], this.vt[1]);
+    let j = 2;
+    while (j < this.vt.length) {
+      this.drawCube(this.vt[j++], this.vt[j++]);
+    }
+    this.drawCubePart2(this.vt[0], this.vt[1]);
+  }
+
+  // draw the whole cube, centered at (x, y)
+  drawCube(x, y) {
+    this.drawCubePart1(x, y);
+    this.drawCubePart2(x, y);
+  }
+  
+  // draw face 0
+  drawCubePart1(x, y) {
+    this.drawCubeSide(
+        x, y, 
+        x + this.chb, y - this.ch,
+        x + this.cubeEdge, y,
+        x + this.chb, y + this.ch,
+        this.cubeColors[0]
+      );
+  }
+  
+  // draw faces 1 and 2
+  drawCubePart2(x, y) {
+    this.drawCubeSide(
+        x, y, 
+        x - this.cubeEdge, y,
+        x - this.chb, y - this.ch,
+        x + this.chb, y - this.ch,
+        this.cubeColors[1]
+      );
+    this.drawCubeSide(
+        x, y, 
+        x + this.chb, y + this.ch,
+        x - this.chb, y + this.ch,
+        x - this.cubeEdge, y,
+        this.cubeColors[2]
+      );
+  }
+  
+  drawCubeSide(x0, y0, x1, y1, x2, y2, x3, y3, color) {
+    this.context.beginPath();
+    this.context.moveTo(x0, y0);
+    this.context.lineTo(x1, y1);
+    this.context.lineTo(x2, y2);
+    this.context.lineTo(x3, y3);
+    this.context.closePath();
+    this.context.fillStyle = color;
+    this.context.stroke();
+    this.context.fill();
+  }
+          </code></pre>
+          <br/>
+          
+          <p class='b'>Getting  it running</p>
+          
+          <p>To wrap things up, we need to start the animation once the window loads:</p>
+          
+          <pre><code class='javascript code'>
+  window.onload = () => {
+    const canvas = document.getElementById('penrose-canvas');
+    const penroseTriangle = new PenroseTrinagle(canvas);
+    penroseTriangle.start();
+  };
+          </code></pre>
+          
+        </div>
+      </div>
+    </article>
+    
+    <div class='main-footer bgg'>
+      <a href='/'><img src='/img/home/footer-mii.png' alt='Mii' title='Home' class='rnd-img bgw marlr10' width='60' height='60'></img></a>
+      <a id='email-link' href='#' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/gmail.png' alt='Gmail Albert Lobo' title='Gmail Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://www.linkedin.com/in/albert-lobo' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/linkedin.png' alt='LinkedIn Albert Lobo' title='LinkedIn Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://github.com/llop' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/github.png' alt='GitHub Albert Lobo' title='GitHub Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://www.npmjs.com/~llop' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/npm-sml.png' alt='npm Albert Lobo' title='npm Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://codeforces.com/profile/Llop' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/codeforces.png' alt='Codeforces Albert Lobo' title='Codeforces Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://www.youtube.com/user/albertlobo1981' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/youtube.png' alt='YouTube Albert Lobo' title='YouTube Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='http://www.smalltalkhub.com/#!/~Llop' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/smalltalkhub.png' alt='SmalltalkHub Albert Lobo' title='SmalltalkHub Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+    </div>
+  </main>
+</body>
+</html>
+
+
+
+
+

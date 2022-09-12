@@ -5,7 +5,7 @@
 class TetrisManager {
   
   
-  constructor(tetris, tetrisLeaderboard, {
+  constructor(tetris, /**tetrisLeaderboard,*/ {
         levelInputId = 'level-input',                 // game control input ids
         playPauseBtnId = 'start-stop-btn', 
         quitBtnId = 'quit-btn',
@@ -28,7 +28,7 @@ class TetrisManager {
         
     // tetris game and leaderboard
     this.tetris = tetris;
-    this.tetrisLeaderboard = tetrisLeaderboard;
+    // this.tetrisLeaderboard = tetrisLeaderboard;
     
     // game result 
     this.lastResult = {
@@ -190,7 +190,7 @@ class TetrisManager {
   _enterScoreBtnClickHandler = event => {
     // try to upload score
     // this._sendScore();
-    this._closeGameOverDialog();
+    
   }
   
   _gameOverCancelBtnClickHandler = event => {
@@ -223,7 +223,7 @@ class TetrisManager {
         
         this._openHiscoreDialog();                    // show dialog
         this.hiscoreBtn.focus();
-        this.tetrisLeaderboard.reload();              // reload leaderboard
+        // this.tetrisLeaderboard.reload();              // reload leaderboard
       }
       
     } else {

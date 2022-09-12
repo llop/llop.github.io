@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang='en'>
+<head>
+  <title>Using javascript's async/await and requestAnimationFrame to render the Buddhabrot</title>
+  <meta charset='UTF-8'>
+  <!-- inentionally left the next line out to fit the whole page width on mobile devices -->
+  <!-- meta name='viewport' content='width=device-width, initial-scale=1.0' -->
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1'>
+  <meta name='author' content='Albert Lobo'>
+  <meta name='description' content='Personal Website'>
+  <meta name='keywords' content='Programming, Fractals, Games, Markets'>
+  <link rel='icon' type='image/png' href='/img/favicon.png' />
+  <script src='/js/script.js'></script>
+  <link rel='stylesheet' href='/css/style.css'>
+  <link rel='stylesheet' href='/js/highlightjs/styles/hybrid.css'>
+  <script src='/js/highlightjs/highlight.pack.js'></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src='/js/fractals/async-await-buddhabrot.js'></script>
+  <link rel='stylesheet' href='/css/fractals/async-await-buddhabrot.css'></link>
+</head>
+
+<body>
+  <div class='navbar-wrapper'>
+    <nav class='navbar' role='navigation'>
+      <a href='/'><div class='navbar-home'>Albert Lobo</div></a>
+      <div class='navbar-menu'>
+        <div id='general-nav' class='nav-item'>
+          <div class='i5'></div><a href='/general'>General</a>
+          <div id='general-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/general/animated-penrose-triangle'>Make an animated Penrose triangle in Javascript + HTML</a></div>
+          </div>
+        </div>
+        <div id='fractals-nav' class='nav-item'>
+          <div class='i5'></div><a href='/fractals'>Fractals</a>
+          <div id='fractals-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/fractals/buddhabrot-4d-viewer'>Buddhabrot 4D viewer</a></div>
+            <div class='nav-subitem'><a href='/fractals/buddhabrot-gallery'>Buddhabrot gallery</a></div>
+            <div class='nav-subitem'><a href='/fractals/mandelbrot-viewer'>Mandelbrot viewer</a></div>
+            <div class='nav-subitem'><a href='/fractals/interior-exterior-distance-bounds-mandelbrot-set'>Interior and exterior distance bounds for the Mandelbrot set</a></div>
+            <div class='nav-subitem'><a href='/fractals/async-await-requestanimationframe-buddhabrot'>Using javascript's async/await and requestAnimationFrame to paint the Buddhabrot</a></div>
+          </div>
+        </div>
+        <div id='games-nav' class='nav-item'>
+          <div class='i5'></div><a href='/games'>Games</a>
+          <div id='games-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/games/tetris'>Tetris</a></div>
+          </div>
+        </div>
+        <div id='markets-nav' class='nav-item'>
+          <div class='i5'></div><a href='/markets'>Markets</a>
+          <div id='markets-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/markets/adjusted-ohlc-values'>Calculating adjusted OHLC values</a></div>
+          </div>
+        </div>
+        <div class='nav-item'><div class='i5'></div><a href='/about'>About</a></div>
+      </div>
+    </nav>
+    </div>
+  <main class='main'>
+    
+    <article class='main-text'>
+      
+    <div class='main-text-block main-text-title bgg'>
+      <div class='text-box'>
+        <h1>Using javascript's <code>async/await</code> and <code>requestAnimationFrame</code> to render the Buddhabrot</h1>
+        <p class='article-date'>Updated October, 2019</p>
+      </div>
+    </div>
+    
+    <div class='main-text-block bgw'>
+    <div class='text-box'>
+    
+    <p>Rendering the <a href='https://en.wikipedia.org/wiki/Buddhabrot'
+      target='_blank' rel='noopener noreferrer'>Buddhabrot</a> is a computationally intensive process. 
+    Therefore, we need to be very careful if we want to paint the Buddhabrot without blocking the page.
+    We can use Javascript's <code><a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise' 
+      target='_blank' rel='noopener noreferrer'>Promises</a> </code> to asynchronously handle 
+    the <span class='i'>scan</span> (where we iterate the Mandelbrot formula) and the <span class='i'>render</span> (where we paint whatever pixel data we have).
+    The <code><a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function'
+      target='_blank' rel='noopener noreferrer'>async</a>/<a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await'
+      target='_blank' rel='noopener noreferrer'>await</a></code> keywords 
+    and the <code><a href='https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame'
+      target='_blank' rel='noopener noreferrer'>requestAnimationFrame</a></code> function make it especially easy to code this.</p>
+    
+    </div>
+    </div>
+    
+    <div class='buddhabrot'>
+    <canvas id='buddhabrot-canvas' class='buddhabrot-canvas' width='1000' height='562'>Your browser does not support canvas.</canvas>
+    </div>
+    
+    <div class='main-text-block bgw'>
+    <div class='text-box'>
+    
+    <p>A simple description of the algorithm:</p>
+    
+    <ol>
+      <li>Sample random points for a while (<span class='i'>scan</span>).</li>
+      <li>Repaint the image (<span class='i'>render</span>).</li>
+      <li>Finish if we sampled enough points, otherwise go back to step 1.</li>
+    </ol>
+    <br/>
+    
+    <p class='b'>The <span class='i'>scan</span> function</p>
+    
+    <p>This function repeats the following block of instructions a large number of times:</p>
+    
+    <pre>
+    let c = random, z = 0, n = 0
+    while n < maxN and abs(z) <= 2:
+      z = z^2 + c
+      ++n
+      
+    if n < maxN: plot z iterates
+      
+    if scan has gone on for long enough: sleep until next repaint is done
+    </pre>
+    
+    <p>This is the original <a href='http://superliminal.com/fractals/bbrot/bbrot.htm'
+      target='_blank' rel='noopener noreferrer'>Budddhabrot technique</a>, where points are selected at random. 
+    Only this time we will take a break every so often, to yield control back to the browser. 
+    This is important, as we want the browser to stay responsive -for instance to button clicks, screen scroll, etc.-, 
+    as well as to repaint the new pixel data <code>scan</code> has produced.</p>
+    
+    <p class='b'>The <span class='i'>render</span> function</p>
+    
+    <p>This function paints the pixel data on the HTML canvas, and schedules a repaint for the next frame.</p>
+    <br/>
+    
+    <p class='b'>Using <code>async/await</code> to implement both functions</p>
+    
+    <p>The <code><a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function'
+      target='_blank' rel='noopener noreferrer'>async</a></code> declaration allows us to define an asynchronous function.
+    <code>async</code> functions always return a <code>Promise</code> object, 
+    and the actual return value will be passed on to the <code>Promise</code>'s <code>resolve</code> method.</p>
+    
+    <p>The <code><a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await'
+      target='_blank' rel='noopener noreferrer'>await</a></code> operator takes a <code>Promise</code>, 
+    and pauses execution of the <code>async</code> function from which it was called until the <code>Promise</code> settles.
+    We can use this to quickly create our render loop:</p>
+    
+    <pre><code class='js'>
+  async render() {
+    do {
+      this.renderBuddhabrot();  // paint Buddhabrot on HTML canvas
+      await this.sleep();       // wait until next repaint
+    } while (this.scanning);    // keep going until scan is finished
+  }
+    </code></pre>
+    
+    <p>Before implementing the <code>scan</code> function, which is more verbose, let's take a look at how <code>sleep</code> works.</p>
+    
+    <p class='b'>Using <code>requestAnimationFrame</code> to synchronize both functions</p>
+    
+    <p><code><a href='https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame'
+      target='_blank' rel='noopener noreferrer'>requestAnimationFrame</a></code> is a function provided by the browser (Web API).
+    It is used to schedule tasks for execution right before the next repaint, so this is exacly what we need to implement <code>sleep</code>:
+    </p>
+    
+    <pre><code class='js'>
+  sleep() { 
+    return new Promise(requestAnimationFrame); 
+  }
+    </code></pre>
+    <br/>
+    
+    <p class='b'>Putting it all together</p>
+    
+    <p>Let's create a <code>Buddhabrot</code> class. We have already seen its <code>render</code> and <code>sleep</code> methods.
+    We will need a function <code>start</code> to initiate the scan and render loops.</p>
+    
+    <pre><code class='js'>
+  'use strict';
+  
+  class Buddhabrot {
+    
+    constructor(canvas) {
+      // TODO
+    }
+    
+    start() {
+      this.scan();
+      this.render();
+    }
+    
+    async scan() {
+      // TODO
+    }
+    
+    async render() {
+      do {
+        this.renderBuddhabrot();  // paint Buddhabrot on HTML canvas
+        await this.sleep();       // wait until next repaint
+      } while (this.scanning);    // keep going until scan is finished
+    }
+    
+    renderBuddhabrot() {
+      // TODO
+    }
+    
+    sleep() { 
+      return new Promise(requestAnimationFrame); 
+    }
+  }
+    </code></pre>
+    
+    <p>It is important to know how <code>async/await</code> works to understand what happens when <code>start</code> is invoked.
+    First, <code>scan</code> is called, and its body immediately starts running, no different than a regular function.
+    However, since it is <code>async</code>, there are 2 ways execution can return to the calling <code>start</code> function:</p>
+    
+    <ol>
+      <li>A <code>return</code> statement, or the end of the function, is reached in <code>scan</code>.</li>
+      <li>An <code>await</code> expression is reached in <code>scan</code>.</li>
+    </ol>
+    
+    <p>Either way, the <code>render</code> function will run next, and it will already have some new pixel data from the scan that just happened.
+    It will paint that, and upon finding the <code>await</code> expression, yield control back to the <code>start</code> function, which will in turn terminate.</p>
+    
+    <p>From there, both the <code>scan</code> and the <code>render</code> functions will resume and pause execution at every browser repaint, 
+    when <code>requestAnimationFrame</code> resolves the <code>Promises</code> we are waiting for and the next <code>await</code> expressions are found, respectively.
+    We can easily see this using Google Chrome's DevTools timeline:</p>
+    </div>
+    </div>
+    
+    <p class='talc'><img src='/img/fractals/async-await-timeline.png' alt='Async/await Buddhabrot timeline' width='1000' height='235'><img></p>
+    
+    <div class='main-text-block bgw'>
+    <div class='text-box'>
+    
+    <p>Now we are ready to implement the remaining functions for the <code>Buddhabrot</code> class.</p>
+    
+    <pre><code class='js'>
+  constructor(canvas) {
+    // Use this.image to paint on canvas
+    this.canvas = canvas;
+    this.context = this.canvas[0].getContext('2d');
+    this.image = this.context.createImageData(this.canvas.width(), this.canvas.height());
+    
+    // Fit a circle centered at (-.25, 0i) and diameter 3.5 in the canvas
+    this.imgWidth = this.canvas.width();
+    this.imgHeight = this.canvas.height();
+    this.imgSize = this.imgWidth * this.imgHeight;
+    const ratio = this.imgWidth / this.imgHeight;
+    const side = 3.5;
+    if (ratio >= 1) {
+      this.height = side;
+      this.width = side * ratio;
+    } else {
+      this.width = side;
+      this.height = side / ratio;
+    }
+    this.center = [ -0.25, 0.0 ];
+    
+    // render variables
+    this.maxN = 5000;
+    this.maxColor = 1;
+    this.itersR = new Float64Array(this.maxN);    // z iterates
+    this.itersI = new Float64Array(this.maxN);
+    this.color = new Float64Array(this.imgSize);  // pixel data
+    for (let i = 0; i < this.imgSize; ++i) {
+      this.color[i] = 0;
+    }
+    this.imageUpdated = false;                    // flags
+    this.scanning = false;
+  }
+    </code></pre>
+    
+    <pre><code class='js'>
+  async scan() {
+    const halfWidth = this.width / 2.0;             // precalculate vars
+    const halfHeight = this.height / 2.0;
+    const top = this.center[0] - halfHeight;
+    const left = this.center[1] - halfWidth;
+    const factor = this.imgWidth / this.width;
+    
+    this.scanning = true;                           // scanning flag and current time
+    let t = performance.now();
+    
+    let pointsLeft = this.imgSize * 100;            // iterate a large number of times
+    while (pointsLeft-- > 0) {
+      const cr = top + Math.random() * this.height; // C = random
+      const ci = left + Math.random() * this.width;
+      let zr = 0.0;                                 // Z = 0
+      let zi = 0.0;
+      let tr = 0.0;                                 // tr and ti = zr and zi squared
+      let ti = 0.0;
+      let n = 0;                                    // iterations counter
+      while (n < this.maxN && tr + ti <= 4.0) {
+        this.itersI[n] = zi = 2.0 * zr * zi + ci;   // Z = Z^2 + C
+        this.itersR[n] = zr = tr - ti + cr;
+        tr = zr * zr;
+        ti = zi * zi;
+        ++n;
+      }
+      
+      if (n < this.maxN) {                          // if C is in M, plot all Z iterates
+        for (let i = 0; i < n; ++i) {
+          const x = Math.floor((this.itersR[i] - top) * factor);
+          const y = Math.floor((this.itersI[i] - left) * factor);
+          if (x >= 0 && x < this.imgHeight && y >= 0 && y < this.imgWidth) {
+            const z = x * this.imgWidth + y;
+            ++this.color[z];
+            this.maxColor = Math.max(this.maxColor, this.color[z]);
+          }
+        }
+        this.imageUpdated = true;
+      }
+      
+      if (performance.now() - t > 10) {             // every 10 millis
+        t = await this.sleep();                     // pause and wait for next repaint 
+      }
+    }
+    this.scanning = false;                          // set flag once the scan is done
+  }
+    </code></pre>
+    
+    <pre><code class='js'>
+  renderBuddhabrot() {
+    if (this.imageUpdated) {
+      this.imageUpdated = false;
+      const brightness = 2.5;
+      let offset = 0;
+      for (let i = 0; i < this.imgSize; ++i) {
+        const gray = Math.min(255, Math.round(brightness * 255 * this.color[i] / this.maxColor));
+        this.image.data[offset++] = gray;
+        this.image.data[offset++] = gray;
+        this.image.data[offset++] = gray;
+        this.image.data[offset++] = 255;
+      }
+      this.context.clearRect(0, 0, this.imgWidth, this.imgHeight);
+      this.context.putImageData(this.image, 0, 0);
+    }
+  }
+    </code></pre>
+    <br/>
+    
+    <p class='b'>Wrapping it up</p>
+    
+    Let's create a simple HTML page for the Buddhabrot.
+    
+    <pre><code class='html'>
+  &lt;html&gt;
+  &lt;head&gt;
+    &lt;script&gt;
+      'use strict';
+      class Buddhabrot {
+        // ...
+      }
+      
+      // start animation on window load
+      window.addEventListener('load', event => {
+        const canvas = document.getElementById('buddhabrot-canvas');
+        const buddhabrot = new Buddhabrot(canvas);
+        buddhabrot.start();
+      });
+    &lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div style='width: 1000px; margin: 0 auto;'&gt;
+    &lt;canvas id='buddhabrot-canvas' width='1000' height='562'&gt;&lt;/canvas&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+  &lt;/html&gt;
+    </code></pre>
+    
+    <p>That's it! Hopefully this demonstrates how easy it is to get things like this done in javascript.
+    On a personal note, I also found this javascript code to be remarkably clean, 
+    as opposed to the nasty callback chains that developers had no choice but to use just a few years ago.</p>
+    
+    </div>
+    </div>
+    </article>
+  
+    <div class='main-footer bgg'>
+      <a href='/'><img src='/img/home/footer-mii.png' alt='Mii' title='Home' class='rnd-img bgw marlr10' width='60' height='60'></img></a>
+      <a id='email-link' href='#' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/gmail.png' alt='Gmail Albert Lobo' title='Gmail Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://www.linkedin.com/in/albert-lobo' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/linkedin.png' alt='LinkedIn Albert Lobo' title='LinkedIn Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://github.com/llop' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/github.png' alt='GitHub Albert Lobo' title='GitHub Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://www.npmjs.com/~llop' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/npm-sml.png' alt='npm Albert Lobo' title='npm Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://codeforces.com/profile/Llop' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/codeforces.png' alt='Codeforces Albert Lobo' title='Codeforces Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://www.youtube.com/user/albertlobo1981' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/youtube.png' alt='YouTube Albert Lobo' title='YouTube Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='http://www.smalltalkhub.com/#!/~Llop' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/smalltalkhub.png' alt='SmalltalkHub Albert Lobo' title='SmalltalkHub Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+    </div>
+  </main>
+</body>
+</html>
+
+
+
+
+

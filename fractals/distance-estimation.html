@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang='en'>
+<head>
+  <title>Interior and exterior distance bounds for the Mandelbrot set</title>
+  <meta charset='UTF-8'>
+  <!-- inentionally left the next line out to fit the whole page width on mobile devices -->
+  <!-- meta name='viewport' content='width=device-width, initial-scale=1.0' -->
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1'>
+  <meta name='author' content='Albert Lobo'>
+  <meta name='description' content='Personal Website'>
+  <meta name='keywords' content='Programming, Fractals, Games, Markets'>
+  <link rel='icon' type='image/png' href='/img/favicon.png' />
+  <script src='/js/script.js'></script>
+  <link rel='stylesheet' href='/css/style.css'>
+  <link rel='stylesheet' href='/js/highlightjs/styles/hybrid.css'>
+  <script src='/js/highlightjs/highlight.pack.js'></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+<body>
+  <div class='navbar-wrapper'>
+    <nav class='navbar' role='navigation'>
+      <a href='/'><div class='navbar-home'>Albert Lobo</div></a>
+      <div class='navbar-menu'>
+        <div id='general-nav' class='nav-item'>
+          <div class='i5'></div><a href='/general'>General</a>
+          <div id='general-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/general/animated-penrose-triangle'>Make an animated Penrose triangle in Javascript + HTML</a></div>
+          </div>
+        </div>
+        <div id='fractals-nav' class='nav-item'>
+          <div class='i5'></div><a href='/fractals'>Fractals</a>
+          <div id='fractals-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/fractals/buddhabrot-4d-viewer'>Buddhabrot 4D viewer</a></div>
+            <div class='nav-subitem'><a href='/fractals/buddhabrot-gallery'>Buddhabrot gallery</a></div>
+            <div class='nav-subitem'><a href='/fractals/mandelbrot-viewer'>Mandelbrot viewer</a></div>
+            <div class='nav-subitem'><a href='/fractals/interior-exterior-distance-bounds-mandelbrot-set'>Interior and exterior distance bounds for the Mandelbrot set</a></div>
+            <div class='nav-subitem'><a href='/fractals/async-await-requestanimationframe-buddhabrot'>Using javascript's async/await and requestAnimationFrame to paint the Buddhabrot</a></div>
+          </div>
+        </div>
+        <div id='games-nav' class='nav-item'>
+          <div class='i5'></div><a href='/games'>Games</a>
+          <div id='games-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/games/tetris'>Tetris</a></div>
+          </div>
+        </div>
+        <div id='markets-nav' class='nav-item'>
+          <div class='i5'></div><a href='/markets'>Markets</a>
+          <div id='markets-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/markets/adjusted-ohlc-values'>Calculating adjusted OHLC values</a></div>
+          </div>
+        </div>
+        <div class='nav-item'><div class='i5'></div><a href='/about'>About</a></div>
+      </div>
+    </nav>
+    </div>
+  <main class='main'>
+    
+    <article class='main-text'>
+      
+      <div class='main-text-block main-text-title bgg'>
+        <div class='text-box'>
+          <h1>Interior and exterior distance bounds for the Mandelbrot set</h1>
+          <p class='article-date'>Updated September, 2022</p>
+        </div>
+      </div>
+      
+      <div class='main-text-block bgw'>
+      <div class='text-box'>
+      
+      <p>Since these distance bounding methods are fairly complicated and non-intuitive, I found it appropriate to dedicate this appendix to them. 
+      Also, very few explanations are available on the internet (especially for the interior bound); 
+      as expected, <a href='https://mrob.com/pub/muency.html' 
+          target='_blank' rel='noopener noreferrer'>MuEncy</a> comments on both bounding methods, 
+      and even gives souce for the <a href='http://mrob.com/pub/muency/distanceestimator.html' 
+          target='_blank' rel='noopener noreferrer'>exterior bounder</a>.</p>
+      <p>Offline, you can look up a book named "<a href='https://dl.acm.org/citation.cfm?id=61153'
+          target='_blank' rel='noopener noreferrer'>The science of fractal images</a>", 
+      by Heinz-Otto Peitgen & Dietmar Saupe editors. This book is worth its weigh in gold.</p>
+      
+      <br/>
+      <p><span class='b'>Interior distance bounding</span></p>
+      <p>The first thing to remember is that the resulting distances should not be considered precise. 
+      They are only bounds; the closest point on the <span class='b'>M</span> border is never found. That is because of the nature of the algorithm.</p>
+      <p>What we will be doing, plain and simple, is looking for disks completely contained in <span class='b'>M</span>. 
+      Maybe a bigger disk would still be inside <span class='b'>M</span>, but that doesn't matter, because we're just calculating bounds. 
+      The algorithm relies on a theorem by Hubbard & Douady (who demonstrated that <span class='b'>M</span> is connected by mapping <span class='b'>M</span> onto the unit disk), 
+      combined with the Koebe 1/4 theorem.</p>
+      <p>The process, if I gathered correctly, is as follows:<p>
+      <ul>
+      <li>Map <span class='b'>C</span> onto the unit disk using Hubbard & Douady's method.</li>
+      <li>Get the inverse of the map using the Möbius transformation.</li>
+      <li>Using Hubbard & Douady's method again, we "unmap" from the inverse map to get a complex value. 
+      Its magnitude, <span class='b'>d</span>, will be used to compute a lower bound.</li>
+      <li>The Koebe 1/4 theorem applies, by construction; hence, 
+      all points within a radius of <span class='b'>d</span>/4 from <span class='b'>C</span> are sure to be in <span class='b'>M</span>.</li>
+      </ul>
+      <p>In practice, not only do we need <span class='b'>C</span> to be inside <span class='b'>M</span>, but we also require <span class='b'>C</span>'s periodic cycle. 
+      That is increasingly harder to detect as <span class='b'>C</span> approaches the <span class='b'>M</span> border. 
+      The following Java snippet is an example of how to find the cycle.<p>
+      
+      <pre><code class='java'>
+  /**
+   * Finds the periodic cycle for a given C, provided C is in M, 
+   * and the number of iterates to check is sufficient.
+   * @param Cr double - Real component of C.
+   * @param Ci double - Imaginary component of C.
+   * @param maxN int  - Maximum number of iterates to check.
+   * @return double[][] - The periodic cycle. The period equals 
+   * 'getPeriodicCycle(Cr,Ci,maxN).length'. Returns null if C 
+   * is outside M, and an empty array if the periodic cycle was not found.
+   */
+  public double[][] getPeriodicCycle(double Cr, double Ci, int maxN) {
+    double Zr, Zi, ZrT, c1, c2;
+    double[] iterR = new double[maxN];
+    double[] iterI = new double[maxN];
+    int i, j, n, maxNT;
+
+    // We'll do various checks to detect more obvious cycles faster.
+
+    int[] nsToChk = new int[] { 0, 0, 0, 0, maxN };
+    for (i = 3; i > -1; i--) nsToChk[i] = nsToChk[i + 1] / 2;
+
+    // Start iterating.
+    for (n = 1, iterR[0] = Zr = iterI[0] = Zi = i = 0; i < 5; i++) {
+      maxNT = nsToChk[i];
+      while (n < maxNT) {
+        iterR[n]   = ZrT = Zr * Zr - Zi * Zi + Cr;
+        iterI[n++] = Zi  = 2.0 * Zr * Zi + Ci;
+        Zr         = ZrT;
+
+        // If C is outside M, return null.
+
+        if (Zr * Zr + Zi * Zi > 4) return null;
+      }
+
+      // This is the periodicity check.
+      for (j = n - 2; j > -1; j--) {
+        c1 = Zr - iterR[j];
+        c2 = Zi - iterI[j];
+        if (c1 * c1 + c2 * c2 < 1E-30) {
+          // Okay, close enough.
+
+          int period       = n - j - 1;
+          double[][] cycle = new double[period][2];
+          int offset       = ((n / period) - 1) * period;
+          for (int k = 0; k < period; k++, offset++) {
+            cycle[k][0] = iterR[offset];
+            cycle[k][1] = iterI[offset];
+          }
+          return cycle;
+        }
+      }
+    }
+
+    // Iterates didn't escape, but period never became apparent 
+    // -return empty array.
+
+    return new double[0][0];
+  }
+      </code></pre>
+      
+      <p>Once we have the periodic cycle, the distance estimation is pretty straight-forward -see the Java source below:</p>
+      
+      <pre><code class='java'>
+  /**
+   * Calculates a lower bound for the distance between C 
+   * and the closest point in the border of M.
+   * @param cycle double[][] - C's periodic cycle.
+   * @return double - The interior distance estimation.
+   */
+  public double getInteriorLowerBound(double[][] cycle) {
+    // Real and imaginary components for complex numbers D1, D2, D3, and D4;
+    // and temporary variables to store the complex numbers in recursion.
+
+    double Zr, Zi, D1r, D1i, D2r, D2i, D3r, D3i, D4r, D4i;
+    double D1rT, D1iT, D2rT, D2iT, D3rT, D3iT, D4rT, D4iT;
+    int i, period = cycle.length;
+
+    // Initial values:  D1 = 1;  D2 = 0;  D3 = 0;  D4 = 0;
+    D1r = 1;
+    D1i = D2r = D2i = D3r = D3i = D4r = D4i = 0;
+
+    // Start iterating.
+    for (i = 0; i < period; i++) {
+      // No need to iterate Z; values are already in 'cycle'.
+
+      Zr = cycle[i][0];
+      Zi = cycle[i][1];
+
+      // D1 = 2 * Z * D1;
+      D1rT = 2 * (Zr * D1r - Zi * D1i);
+      D1iT = 2 * (Zi * D1r + Zr * D1i);
+
+      // D2 = 2 * Z * D2 + 1;
+      D2rT = 2 * (Zr * D2r - Zi * D2i) + 1;
+      D2iT = 2 * (Zi * D2r + Zr * D2i);
+
+      // D3 = 2 * (D1^2 + Z * D3);
+      D3rT = 2 * ((Zr * D3r - Zi * D3i) + (D1r * D1r - D1i * D1i));
+      D3iT = 2 * ((Zr * D3i + Zi * D3r) + (2 * D1r * D1i));
+
+      // D4 = 2 * (D1 * D2 + Z * D4);
+      D4rT = 2 * ((Zr * D4r - Zi * D4i) + (D1r * D2r - D1i * D2i));
+      D4iT = 2 * ((Zr * D4i + Zi * D4r) + (D1r * D2i + D1i * D2r));
+
+      // Update variables.
+
+      D1r = D1rT;  D1i = D1iT;
+      D2r = D2rT;  D2i = D2iT;
+      D3r = D3rT;  D3i = D3iT;
+      D4r = D4rT;  D4i = D4iT;
+    }
+
+    // A = 1 - |D1|^2;
+    double A = 1 - (D1r * D1r + D1i * D1i);
+    // B = |D4 + D3 * (D2 / (1 - D1))|;
+    double B = (1 - D1r) * (1 - D1r) + D1i * D1i;
+    D1rT = (D2r * (1 - D1r) - D2i * D1i) / B;
+    D1iT = (D2i * (1 - D1r) + D2r * D1i) / B;
+    D2rT = D4r + (D3r * D1rT - D3i * D1iT);
+    D2iT = D4i + (D3i * D1rT + D3r * D1iT);
+    B    = StrictMath.sqrt(D2rT * D2rT + D2iT * D2iT);
+
+    // Return lower bound -that is, 1/4 the estimated bound.
+    return A / (4.0 * B);
+  }
+      </code></pre>
+      
+      <br/>
+      <p><span class='b'>Exterior distance bounding</span></p>
+      
+      <p>Computing a lower bound for the distance between a point <span class='b'>C</span> outside <span class='b'>M</span> and <span class='b'>M</span> is even more simple. 
+      As in the interior bounding, we rely on theorems by Hubbard & Douady, and Koebe. 
+      The actual algorithm is based on the ideas of J. Milnor and W. Thurston, expanded by A. Wilkes & J. Hubbard. 
+      Beware, though, the algorithm works well for <span class='b'>C</span>s reasonably close to <span class='b'>M</span>.</p>
+      
+      <p>This is the Java source:</p>
+      
+      <pre><code class='java'>
+  /**
+   * Calculates a lower bound for the distance between C and the closest 
+   * point in the border of M, if C is outside M.
+   * @param Cr double - Real component of C.
+   * @param Ci double - Imaginary component of C.
+   * @param maxN int  - Maximum number of times the Mandelbrot function will be iterated.
+   * @return double   - The approximate distance between C and the closest
+   * point in M. If C is in M, -1 will be returned.
+   */>
+  public double getExteriorLowerBound(double Cr, double Ci, int maxN) {
+    double Zr, Zi, ZrT, ZiT, c1, c2;
+    double[] iterR = new double[maxN];
+    double[] iterI = new double[maxN];
+    int i, j, n, maxNT;
+
+    // We'll do various checks to detect periods faster.
+
+    int[] nsToChk = new int[] { 0, 0, 0, 0, maxN };
+    for (i = 3; i > -1; i--) nsToChk[i] = nsToChk[i + 1] / 2;
+
+    // Start iterating.
+    for (n = 1, iterR[0] = Zr = iterI[0] = Zi = i = 0; i < 5; i++) {
+      maxNT = nsToChk[i];
+      while (n < maxNT) {
+        iterR[n]   = ZrT = Zr * Zr - Zi * Zi + Cr;
+        iterI[n++] = Zi  = 2.0 * Zr * Zi + Ci;
+        Zr         = ZrT;
+
+        // If C is outside M, do distance estimation.
+
+        if (Zr * Zr + Zi * Zi > 4) {
+          double dZr, dZi, dZrT;
+          int nT = n - 1;
+
+          // Recursively calculate first derivative:  D = 2 * Z * D + 1;
+          for (dZr = dZi = i = 0; i < nT; i++) {
+            ZrT  = iterR[i];
+            ZiT  = iterI[i];
+            dZrT = 2.0 * (ZrT * dZr - ZiT * dZi) + 1;
+            dZi  = 2.0 * (ZrT * dZi + ZiT * dZr);
+            dZr  = dZrT;
+          }
+
+          // Lower bound:  (2 * log |Z| * (|Z| / |D|)) / 4;
+
+          c1 = StrictMath.sqrt(Zr * Zr + Zi * Zi);
+          c2 = StrictMath.sqrt(dZr * dZr + dZi * dZi);
+          return (StrictMath.log(Zr * Zr + Zi * Zi) * c1 / c2) / 4.0;
+        }
+      }
+
+      // Periodicity check.
+      for (j = n - 2; j > -1; j--) {
+        c1 = Zr - iterR[j];
+        c2 = Zi - iterI[j];
+        if (c1 * c1 + c2 * c2 < 1E-30) return -1.0;
+      }
+    }
+
+    return -1.0;
+  }
+      </code></pre>
+      
+      <p>Both interior and exterior bounding can be combined to produce images such as this:</p>
+      
+      <p class='talc'><img src='/img/fractals/mandeldistest.jpg' alt='Mandelbrot Distance Estimations' width='880' height='880'></p>
+      
+      <p>For lack of a better color palette, I used gray-scale.</p>
+      
+      <p>Points outside <span class='b'>M</span> get brighter as they approach the border. Points in <span class='b'>M</span> get darker towards the border.</p>
+    
+    </div>
+    </div>
+    
+    </article>
+  
+    <div class='main-footer bgg'>
+      <a href='/'><img src='/img/home/footer-mii.png' alt='Mii' title='Home' class='rnd-img bgw marlr10' width='60' height='60'></img></a>
+      <a id='email-link' href='#' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/gmail.png' alt='Gmail Albert Lobo' title='Gmail Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://www.linkedin.com/in/albert-lobo' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/linkedin.png' alt='LinkedIn Albert Lobo' title='LinkedIn Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://github.com/llop' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/github.png' alt='GitHub Albert Lobo' title='GitHub Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://www.npmjs.com/~llop' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/npm-sml.png' alt='npm Albert Lobo' title='npm Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://codeforces.com/profile/Llop' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/codeforces.png' alt='Codeforces Albert Lobo' title='Codeforces Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://www.youtube.com/user/albertlobo1981' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/youtube.png' alt='YouTube Albert Lobo' title='YouTube Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='http://www.smalltalkhub.com/#!/~Llop' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/smalltalkhub.png' alt='SmalltalkHub Albert Lobo' title='SmalltalkHub Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+    </div>
+  </main>
+</body>
+</html>
+
+
+
+
+

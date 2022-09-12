@@ -1,0 +1,1076 @@
+<!doctype html>
+<html lang='en'>
+<head>
+  <title>Buddhabrot gallery</title>
+  <meta charset='UTF-8'>
+  <!-- inentionally left the next line out to fit the whole page width on mobile devices -->
+  <!-- meta name='viewport' content='width=device-width, initial-scale=1.0' -->
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1'>
+  <meta name='author' content='Albert Lobo'>
+  <meta name='description' content='Personal Website'>
+  <meta name='keywords' content='Programming, Fractals, Games, Markets'>
+  <link rel='icon' type='image/png' href='/img/favicon.png' />
+  <script src='/js/script.js'></script>
+  <link rel='stylesheet' href='/css/style.css'>
+  <link rel='stylesheet' href='/css/fractals/buddhabrot-gallery.css'>  
+</head>
+
+<body>
+  <div class='navbar-wrapper'>
+    <nav class='navbar' role='navigation'>
+      <a href='/'><div class='navbar-home'>Albert Lobo</div></a>
+      <div class='navbar-menu'>
+        <div id='general-nav' class='nav-item'>
+          <div class='i5'></div><a href='/general'>General</a>
+          <div id='general-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/general/animated-penrose-triangle'>Make an animated Penrose triangle in Javascript + HTML</a></div>
+          </div>
+        </div>
+        <div id='fractals-nav' class='nav-item'>
+          <div class='i5'></div><a href='/fractals'>Fractals</a>
+          <div id='fractals-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/fractals/buddhabrot-4d-viewer'>Buddhabrot 4D viewer</a></div>
+            <div class='nav-subitem'><a href='/fractals/buddhabrot-gallery'>Buddhabrot gallery</a></div>
+            <div class='nav-subitem'><a href='/fractals/mandelbrot-viewer'>Mandelbrot viewer</a></div>
+            <div class='nav-subitem'><a href='/fractals/interior-exterior-distance-bounds-mandelbrot-set'>Interior and exterior distance bounds for the Mandelbrot set</a></div>
+            <div class='nav-subitem'><a href='/fractals/async-await-requestanimationframe-buddhabrot'>Using javascript's async/await and requestAnimationFrame to paint the Buddhabrot</a></div>
+          </div>
+        </div>
+        <div id='games-nav' class='nav-item'>
+          <div class='i5'></div><a href='/games'>Games</a>
+          <div id='games-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/games/tetris'>Tetris</a></div>
+          </div>
+        </div>
+        <div id='markets-nav' class='nav-item'>
+          <div class='i5'></div><a href='/markets'>Markets</a>
+          <div id='markets-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/markets/adjusted-ohlc-values'>Calculating adjusted OHLC values</a></div>
+          </div>
+        </div>
+        <div class='nav-item'><div class='i5'></div><a href='/about'>About</a></div>
+      </div>
+    </nav>
+    </div>
+  <main class='main'>
+    <article class='main-text'>
+    
+    <div class='main-text-block main-text-title bgg'>
+      <div class='text-box'>
+        <h1>Buddhabrot gallery</h1>
+        <p class='article-date'>Updated September, 2022</p>
+      </div>
+    </div>
+    
+    <div class='main-text-block bgw'>
+    <div class='text-box'>
+    
+    <p>A collection of Buddhabrot-related images and videos that I created.</p>
+  
+    </div>
+    </div>
+    
+    <div class='video-box'>
+    <video width='1000' height='562' controls preload='metadata' poster='/img/fractals/buddhabrot/BuddhaNimacion%28XVid%2BMP3%29.png'>
+      <source src='https://www.dropbox.com/s/lenovlpjf5rf0i3/BuddhaNimacion%28XVid%2BMP3%29.mp4?raw=1' type='video/mp4'>
+      Your browser does not support the video tag.
+    </video>
+    </div>
+    
+    <div class='main-text-block bgw'>
+    <div class='text-box'>
+    
+    <p>The Buddhabrot's 6 major planes.</p>
+    
+    <div class='gallery-table'>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/Buda4D(ZrZi).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/Buda4D(ZrZi)_Thmb.jpg' alt='(Zr, Zi) plane' width='250' height='250'>
+        </a>
+        <figcaption>(Zr, Zi) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/Buda4D(ZrCr).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/Buda4D(ZrCr)_Thmb.jpg' alt='(Zr, Cr) plane' width='250' height='250'>
+        </a>
+        <figcaption>(Zr, Cr) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/Buda4D(ZrCi).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/Buda4D(ZrCi)_Thmb.jpg' alt='(Zr, Ci) plane' width='250' height='250'>
+        </a>
+        <figcaption>(Zr, Ci) plane</figcaption>
+      </figure>
+      </div>
+    </div>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/Buda4D(CrCi).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/Buda4D(CrCi)_Thmb.jpg' alt='(Cr, Ci) plane' width='250' height='250'>
+        </a>
+        <figcaption>(Cr, Ci) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/Buda4D(CrZi).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/Buda4D(CrZi)_Thmb.jpg' alt='(Cr, Zi) plane' width='250' height='250'>
+        </a>
+        <figcaption>(Cr, Zi) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/Buda4D(CiZi).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/Buda4D(CiZi)_Thmb.jpg' alt='(Ci, Zi) plane' width='250' height='250'>
+        </a>
+        <figcaption>(Ci, Zi) plane</figcaption>
+      </figure>
+      </div>
+    </div>
+    </div>
+    
+    <br/>
+    <p>The Mandelbrot set is contained in a circle, so it can easily be turned inside out. </p>
+    
+    <div class='gallery-table'>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaInvert(Zr,Zi).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaInvert(Zr,Zi)_Thmb.jpg' alt='(Zr, Zi) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zr, Zi) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaInvert(Zr,Cr).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaInvert(Zr,Cr)_Thmb.jpg' alt='(Zr, Cr) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zr, Cr) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaInvert(Zr,Ci).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaInvert(Zr,Ci)_Thmb.jpg' alt='(Zr, Ci) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zr, Ci) plane</figcaption>
+      </figure>
+      </div>
+    </div>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaInvert(Cr,Ci).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaInvert(Cr,Ci)_Thmb.jpg' alt='(Cr, Ci) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Cr, Ci) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaInvert(Cr,Zi).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaInvert(Cr,Zi)_Thmb.jpg' alt='(Cr, Zi) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Cr, Zi) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaInvert(Zi,Ci).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaInvert(Zi,Ci)_Thmb.jpg' alt='(Zi, Ci) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zi, Ci) plane</figcaption>
+      </figure>
+      </div>
+    </div>
+    </div>
+    
+    <br/>
+    <p>Nebulabrot render.</p>
+    
+    <div class='gallery-figure-box'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BuddhaBrotNebula.jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BuddhaBrotNebula_Thmb.jpg' alt='Nebulabrot' width='250' height='250'>
+        </a>
+        <figcaption>Nebulabrot</figcaption>
+      </figure>
+    </div>
+    
+    <br/>
+    <p>The Buddhabrot fits perfectly inside a 4D cube.</p>
+    
+    <div class='gallery-figure-box'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/HiperCuboBuddhaBrot(5).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/HiperCuboBuddhaBrot(5)_Thmb.jpg' alt='Buddhabrot in a hypercube' width='200' height='257'>
+        </a>
+        <figcaption>Buddhabrot in a hypercube</figcaption>
+      </figure>
+    </div>
+    
+    <br/>
+    <p>The formula used for the next image is Z<sub>n</sub> = Z<sub>n-1</sub><sup>3</sup> + C.</p>
+    
+    <div class='gallery-figure-box'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/Buda(Var(Z_Z%5E3+C)).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/Buda(Var(Z_Z^3+C))_Thmb.jpg' alt='Zn=Zn-1^3+C' width='200' height='200'>
+        </a>
+        <figcaption>Z<sub>n</sub> = Z<sub>n-1</sub><sup>3</sup> + C</figcaption>
+      </figure>
+    </div>
+    
+    <br/>
+    <p class='b'>Zooming</p>
+    
+    <p>The following images are a zoom of the '3<sup>rd</sup> eye' on the Buddha's forehead.
+    Each B&amp;W image takes a color channel, and merging them all results in the last one.
+    Center at (-1.15, 0i), width = 0.125.</p>
+    
+    <div class='gallery-table'>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaZoomOjo3maxN500.jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaZoomOjo3maxN500_Thmb.jpg' alt='maxN = 500' width='180' height='180'>
+        </a>
+        <figcaption>maxN = 500</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaZoomOjo3maxN5000.jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaZoomOjo3maxN5000_Thmb.jpg' alt='maxN = 5000' width='180' height='180'>
+        </a>
+        <figcaption>maxN = 5000</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaZoomOjo3maxN50000.jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaZoomOjo3maxN50000_Thmb.jpg' alt='maxN = 50000' width='180' height='180'>
+        </a>
+        <figcaption>maxN = 50000</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaZoomOjo3Col.jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaZoomOjo3Col_Thmb.jpg' alt='Buddhabrot zoom 3rd eye' width='180' height='180'>
+        </a>
+        <figcaption>Zoom 3<sup>rd</sup> eye</figcaption>
+      </figure>
+      </div>
+    </div>
+    </div>
+    
+    <br/>
+    <p>Zoom of the 3<sup>rd</sup> circumference on Buddha's head.</p>
+    
+    <div class='gallery-figure-box'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaZoom(C(0,-1.4),L.003).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaZoom(C(0,-1.4),L.003)_Thmb.jpg' alt='Center = (-1.4, 0i), width = 0.003' width='200' height='200'>
+        </a>
+        <figcaption>center = (-1.4, 0i)<br/>width = 0.003</figcaption>
+      </figure>
+    </div>
+    
+    <br/>
+    <p>The sequence below shows a deep zoom on the floating Ghostbrots on the main figure's shoulder.</p>
+    
+    <div class='gallery-table'>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaZoomA1(C(.7075,-1.2025),L.05).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaZoomA1(C(.7075,-1.2025),L.05)_Thmb.jpg' alt='Center = (-1.2025, .7075i), width = .05' width='180' height='180'>
+        </a>
+        <figcaption>center = (-1.2025, .7075i)<br/>width = .05</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaZoomA2(C(.70845,-1.21775),L.0008).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaZoomA2(C(.70845,-1.21775),L.0008)_Thmb.jpg' alt='Center = (-1.21775, .70845i), width = .0008' width='180' height='180'>
+        </a>
+        <figcaption>center = (-1.21775, .70845i)<br/>width = .0008</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaZoomA3(C(.70835,-1.217963),L.000016).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaZoomA3(C(.70835,-1.217963),L.000016)_Thmb.jpg' alt='Center = (-1.217963, .70835i), width = .000016' width='180' height='180'>
+        </a>
+        <figcaption>center = (-1.217963, .70835i)<br/>width = .000016</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaZoomA4(C(.70834436,-1.2179607),L.00000024).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaZoomA4(C(.70834436,-1.2179607},L.00000024)_Thmb.jpg' alt='Center = (-1.2179607, .70834436i), width = .00000024' width='180' height='180'>
+        </a>
+        <figcaption>center = (-1.2179607, .70834436i)<br/>width = .00000024</figcaption>
+      </figure>
+      </div>
+    </div>
+    </div>
+    
+    <br/>
+    <p>The next 2 images zoom on the Buddhabrot's center. 
+    The first image shows only orbits projected by the Minibrot centerd at (-.16, 1.035i).</p>
+    
+    <div class='gallery-table'>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaZoom(C(0,0),L.3).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaZoom(C(0,0),L.3)Thmb.jpg' alt='Center = (0, 0i), width = .3; Minibrot orbits only' width='200' height='200'>
+        </a>
+        <figcaption>center = (0, 0i)<br/>width = .3<br/>Minibrot orbits only</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaZoom(C(0,0),L.3)(2).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaZoom(C(0,0),L.3)(2)_Thmb.jpg' alt='Center = (0, 0i), width = .3; all orbits' width='200' height='200'>
+        </a>
+        <figcaption>center = (0, 0i)<br/>width = .3<br/>All orbits</figcaption>
+      </figure>
+      </div>
+    </div>
+    </div>
+    
+    <br/>
+    <p>More zooms.</p>
+    
+    <div class='gallery-table'>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BBrotZoom00015.jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BBrotZoom00015_Thmb.jpg' alt='Center = (1.35, 0i), width = 0.125' width='250' height='250'>
+        </a>
+        <figcaption>center = (1.35, 0i)<br/>width = 0.125<br/>minN-maxN red = 5 - 1000<br/>minN-maxN green = 10 - 3500<br/>minN-maxN blue = 15 - 6000</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/Buddhabrot00016.jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/Buddhabrot00016_Thmb.jpg' alt='Center = (-0.158428, 1.03335i), width = 0.030476' width='250' height='250'>
+        </a>
+        <figcaption>center = (-0.158428, 1.03335i)<br/>width = 0.030476<br/>minN-maxN red = 30 - 12000<br/>minN-maxN green = 20 - 7000<br/>minN-maxN blue = 10 - 2000</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/Buddhabrot00020.jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/Buddhabrot00020_Thmb.jpg' alt='Center = (-1.477333, 0i), width = 0.018443' width='250' height='250'>
+        </a>
+        <figcaption>center = (-1.477333, 0i)<br/>width = 0.018443<br/>minN-maxN red = 0 - 15000<br/>minN-maxN green = 0 - 10000<br/>minN-maxN blue = 0 - 5000</figcaption>
+      </figure>
+      </div>
+    </div>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/Buddhabrot00041.jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/Buddhabrot00041_Thmb.jpg' alt='Center = (-1.25586, 0.38095i), width = 0.01054' width='250' height='250'>
+        </a>
+        <figcaption>center = (-1.25586, 0.38095i)<br/>width = 0.01054<br/>minN-maxN red = 0 - 10000<br/>minN-maxN green = 0 - 1000<br/>minN-maxN blue = 0 - 500</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/Buddhabrot00027.jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/Buddhabrot00027_Thmb.jpg' alt='Center = (0.0728025227119999, -1.1048127150340001i), width = 0.032' width='250' height='250'>
+        </a>
+        <figcaption>center = (0.0728025227119999, -1.1048127150340001i)<br/>width = 0.032<br/>minN-maxN red = 20 - 10000<br/>minN-maxN green = 20 - 15000<br/>minN-maxN blue = 20 - 20000</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/Buddhabrot00012.jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/Buddhabrot00012_thmb.jpg' alt='Center = (-0.1915867, 0.8151886i), width = 0.0001165' width='250' height='250'>
+        </a>
+        <figcaption>center = (-0.1915867, 0.8151886i)<br/>width = 0.0001165<br/>minN-maxN red = 200 - 10000<br/>minN-maxN green = 500 - 25000<br/>minN-maxN blue = 1000 - 50000</figcaption>
+      </figure>
+      </div>
+    </div>
+    </div>
+    
+    <br/>
+    <p class='b'>Animations</p>
+    
+    <p>Rotation through the Buddhabrot's 6 major planes.</p>
+    
+    </div>
+    </div>
+    
+    <div class='video-box'>
+    <video width='1000' height='562' controls preload='metadata' poster='/img/fractals/buddhabrot/BuddhaBrotAnimacion%28Divx%292.png'>
+      <source src='https://www.dropbox.com/s/4uabvg6ls3irw5w/BuddhaBrotAnimacion%28Divx%292.mp4?raw=1' type='video/mp4'>
+      Your browser does not support the video tag.
+    </video>
+    </div>
+    
+    <div class='main-text-block bgw'>
+    <div class='text-box'>
+    
+    <p>What happens as we sample more and more points on the plane?
+    Start with 1 point per pixel, and finish with 10000.</p>
+    
+    </div>
+    </div>
+    
+    <div class='video-box'>
+    <video width='1000' height='562' controls preload='metadata' poster='/img/fractals/buddhabrot/BuddhaBrotNumCs%28500x500%29%28Divx%29.png'>
+      <source src='https://www.dropbox.com/s/h4l1voxvjpac67q/BuddhaBrotNumCs%28500x500%29%28Divx%29.mp4?raw=1' type='video/mp4'>
+      Your browser does not support the video tag.
+    </video>
+    </div>
+    
+    <div class='main-text-block bgw'>
+    <div class='text-box'>
+    
+    <p>What happens as the value of maxN increases? 
+    Start with 1, finish with 25000.</p>   
+    
+    </div>
+    </div>
+    
+    <div class='video-box'>
+    <video width='1000' height='562' controls preload='metadata' poster='/img/fractals/buddhabrot/BuddhaBrotMaxN1-25000%28500x500%29%28Divx%29.png'>
+      <source src='https://www.dropbox.com/s/rb0w16xiv0c3hci/BuddhaBrotMaxN1-25000%28500x500%29%28Divx%29.mp4?raw=1' type='video/mp4'>
+      Your browser does not support the video tag.
+    </video>
+    </div>
+    
+    <div class='main-text-block bgw'>
+    <div class='text-box'>
+    
+    <p>Plane sweep. 
+    Painting only trajectories that belong to points within the height 0.1 horizontal stripe.</p>
+    
+    </div>
+    </div>
+    
+    <div class='video-box'>
+    <video width='1000' height='562' controls preload='metadata' poster='/img/fractals/buddhabrot/BuddhaBarrido%28Divx%29.png'>
+      <source src='https://www.dropbox.com/s/u1bu3xgy5k5lz1j/BuddhaBarrido%28Divx%29.mp4?raw=1' type='video/mp4'>
+      Your browser does not support the video tag.
+    </video>
+    </div>
+    
+    <div class='main-text-block bgw'>
+    <div class='text-box'>
+    
+    <p>Rotation from plane (Cr, Ci) to (Zr, Zi). 
+    This illustrates how trajectories unfold the Mandelbrot into the Buddhabrot.</p>
+    
+    </div>
+    </div>
+    
+    <div class='video-box'>
+    <video width='1000' height='562' controls preload='metadata' poster='/img/fractals/buddhabrot/BuddhaBrot%28Zr%2CZi%29a%28Cr%2CCi%29%282%29.png'>
+      <source src='https://www.dropbox.com/s/1mkda0mk401y152/BuddhaBrot%28Zr%2CZi%29a%28Cr%2CCi%29%282%29.mp4?raw=1' type='video/mp4'>
+      Your browser does not support the video tag.
+    </video> 
+    </div>
+    
+    <div class='main-text-block bgw'>
+    <div class='text-box'>
+    
+    <p class='b'>Buddhagrams.</p>
+    
+    <p>The next 3 videos show what happens when Z<sub>0</sub> is initialized with different values.</p>
+    
+    <p>Zr<sub>0</sub> = 0, Zi<sub>0</sub> increases from 0:</p>
+    
+    </div>
+    </div>
+    
+    <div class='video-box'>
+    <video width='1000' height='562' controls preload='metadata' poster='/img/fractals/buddhabrot/BuddhaGranim%281%29%28Zi_0-2%29%28Divx%29.png'>
+      <source src='https://www.dropbox.com/s/to93dzis0ji2gi1/BuddhaGranim%281%29%28Zi_0-2%29%28Divx%29.mp4?raw=1' type='video/mp4'>
+      Your browser does not support the video tag.
+    </video> 
+    </div>
+    
+    <div class='main-text-block bgw'>
+    <div class='text-box'>
+    
+    <p>Zr<sub>0</sub> increases from 0, Zi<sub>0</sub> increases from 0:</p>
+    
+    </div>
+    </div>
+    
+    <div class='video-box'>
+    <video width='1000' height='562' controls preload='metadata' poster='/img/fractals/buddhabrot/BuddhaGranim%282%29%28Zr%2CZi_0-2%29%28Divx%29.png'>
+      <source src='https://www.dropbox.com/s/w53ierwobkfh6i1/BuddhaGranim%282%29%28Zr%2CZi_0-2%29%28Divx%29.mp4?raw=1' type='video/mp4'>
+      Your browser does not support the video tag.
+    </video> 
+    </div>
+    
+    <div class='main-text-block bgw'>
+    <div class='text-box'>
+    
+    <p>Zr<sub>0</sub> increases from 0, Zi<sub>0</sub> = 0:</p>
+    
+    </div>
+    </div>
+    
+    <div class='video-box'>
+    <video width='1000' height='562' controls preload='metadata' poster='/img/fractals/buddhabrot/BuddhaGranim%283%29%28Zr_0-2%29%28Divx%29.png'>
+      <source src='https://www.dropbox.com/s/9vxb3whvn1rt0x8/BuddhaGranim%283%29%28Zr_0-2%29%28Divx%29.mp4?raw=1' type='video/mp4'>
+      Your browser does not support the video tag.
+    </video> 
+    </div>
+    
+    <div class='main-text-block bgw'>
+    <div class='text-box'>
+    
+    <br/>
+    <p class='b'>Negative Buddhabrot</p>
+    
+    <p>The 6 major planes, painting only trajectories that belong to points in M.</p>
+    
+    <div class='gallery-table'>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaNeg(Zr,Zi).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaNeg(Zr,Zi)_Thmb.jpg' alt='(Zr, Zi) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zr, Zi) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaNeg(Zr,Cr).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaNeg(Zr,Cr)_Thmb.jpg' alt='(Zr, Cr) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zr, Cr) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaNeg(Zr,%20Ci).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaNeg(Zr, Ci)_Thmb.jpg' alt='(Zr, Ci) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zr, Ci) plane</figcaption>
+      </figure>
+      </div>
+    </div>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaNeg(Cr,Ci).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaNeg(Cr,Ci)_Thmb.jpg' alt='(Cr, Ci) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Cr, Ci) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaNeg(Cr,Zi).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaNeg(Cr,Zi)_Thmb.jpg' alt='(Cr, Zi) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Cr, Zi) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaNeg(Zi,Ci).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaNeg(Zi,Ci)_Thmb.jpg' alt='(Zi, Ci) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zi, Ci) plane</figcaption>
+      </figure>
+      </div>
+    </div>
+    </div>
+    
+    <br/>
+    <p>Inverted version of the previous planes.</p>
+    
+    <div class='gallery-table'>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaNegInvert(Zr,Zi).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaNegInvert(Zr,Zi)_Thmb.jpg' alt='(Zr, Zi) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zr, Zi) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaNegInvert(Zr,Cr).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaNegInvert(Zr,Cr)_Thmb.jpg' alt='(Zr, Cr) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zr, Cr) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaNegInvert(Zr,Ci).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaNegInvert(Zr,Ci)_Thmb.jpg' alt='(Zr, Ci) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zr, Ci) plane</figcaption>
+      </figure>
+      </div>
+    </div>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaNegInvert(Cr,Ci).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaNegInvert(Cr,Ci)_Thmb.jpg' alt='(Cr, Ci) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Cr, Ci) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaNegInvert(Cr,Zi).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaNegInvert(Cr,Zi)_Thmb.jpg' alt='(Cr, Zi) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Cr, Zi) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaNegInvert(Zi,Ci).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaNegInvert(Zi,Ci)_Thmb.jpg' alt='(Zi, Ci) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zi, Ci) plane</figcaption>
+      </figure>
+      </div>
+    </div>
+    </div>
+    
+    <br/>
+    <p>A couple more renders.</p>
+    
+    <div class='gallery-table'>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaNeg(Zr,Zi)(2).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaNeg(Zr,Zi)(2)_Thmb.jpg' alt='(Zr, Zi) plane' width='200' height='200'>
+        </a>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaNeg(Zr,Zi)(3).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaNeg(Zr,Zi)(3)_Thmb.jpg' alt='(Zr, Zi) plane' width='200' height='200'>
+        </a>
+      </figure>
+      </div>
+    </div>
+    </div>
+    
+    <br/>
+    <p class='b'>Primitive Buddhabrot</p>
+    
+    <p>The 6 major planes from Linas Vepstas' original idea, colored using the Buddhabrot technique.</p>
+    
+    <div class='gallery-table'>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaPrim(Zr,Zi).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaPrim(Zr,Zi)_Thmb.jpg' alt='(Zr, Zi) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zr, Zi) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaPrim(Zr,Cr).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaPrim(Zr,Cr)_Thmb.jpg' alt='(Zr, Cr) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zr, Cr) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaPrim(Zr,Ci).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaPrim(Zr,Ci)_Thmb.jpg' alt='(Zr, Ci) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zr, Ci) plane</figcaption>
+      </figure>
+      </div>
+    </div>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaPrim(Cr,Ci).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaPrim(Cr,Ci)_Thmb.jpg' alt='(Cr, Ci) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Cr, Ci) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaPrim(Cr,Zi).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaPrim(Cr,Zi)_Thmb.jpg' alt='(Cr, Zi) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Cr, Zi) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaPrim(Zi,Ci).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaPrim(Zi,Ci)_Thmb.jpg' alt='(Zi, Ci) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zi, Ci) plane</figcaption>
+      </figure>
+      </div>
+    </div>
+    </div>
+    
+    <br/>
+    <p class='b'>Mutant Buddhabrots</p>
+    
+    <p>The images below are the product of buggy code.</p>
+    
+    <div class='gallery-table'>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaMutante1.jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaMutante1_Thmb.jpg' alt='Mutant 1' width='200' height='200'>
+        </a>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaMutante2.jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaMutante2_Thmb.jpg' alt='Mutant 2' width='200' height='200'>
+        </a>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaMutante3.jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaMutante3_Thmb.jpg' alt='Mutant 3' width='200' height='200'>
+        </a>
+      </figure>
+      </div>
+    </div>
+    </div>
+    
+    <br/>
+    <p class='b'>Buddhabrot hologram</p>
+    
+    <p>This rendering technique uses the Mandelbrot formula, but initializes Z<sub>0</sub> to a random value instead of 0.</p>
+    
+    <div class='gallery-table'>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGram(Zr,Zi)(2).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGram(Zr,Zi)(2)_Thmb.jpg' alt='(Zr, Zi) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zr, Zi) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGram(Zr,Cr)(2).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGram(Zr,Cr)(2)_Thmb.jpg' alt='(Zr, Cr) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zr, Cr) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGram(Zr,Ci)(2).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGram(Zr,Ci)(2)_Thmb.jpg' alt='(Zr, Ci) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zr, Ci) plane</figcaption>
+      </figure>
+      </div>
+    </div>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGram(Cr,Ci)(2).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGram(Cr,Ci)(2)_Thmb.jpg' alt='(Cr, Ci) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Cr, Ci) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGram(Cr,Zi)(2).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGram(Cr,Zi)(2)_Thmb.jpg' alt='(Cr, Zi) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Cr, Zi) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGram(Zi,Ci)(2).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGram(Zi,Ci)(2)_Thmb.jpg' alt='(Zi, Ci) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zi, Ci) plane</figcaption>
+      </figure>
+      </div>
+    </div>
+    </div>
+    
+    <br/>
+    <p class='b'>Buddhabrot hologram variations</p>
+    
+    <p>The following images result from overlaying many axial cuttings of the 4D data 
+    -in other words, several images generated with different Z<sub>0</sub> values;
+    in planes (Zr, Cr) and (Zi, Ci) the cuts are visible as diagonal lines.</p>
+    
+    <div class='gallery-table'>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGramLam(Zr,Zi).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGramLam(Zr,Zi)_Thmb.jpg' alt='(Zr, Zi) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zr, Zi) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGramLam(Zr,Cr).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGramLam(Zr,Cr)_Thmb.jpg' alt='(Zr, Cr) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zr, Cr) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGramLam(Zr,Ci).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGramLam(Zr,Ci)_Thmb.jpg' alt='(Zr, Ci) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zr, Ci) plane</figcaption>
+      </figure>
+      </div>
+    </div>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGramLam(Cr,Ci).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGramLam(Cr,Ci)_Thmb.jpg' alt='(Cr, Ci) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Cr, Ci) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGramLam(Cr,Zi).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGramLam(Cr,Zi)_Thmb.jpg' alt='(Cr, Zi) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Cr, Zi) plane</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGramLam(Zi,Ci).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGramLam(Zi,Ci)_Thmb.jpg' alt='(Zi, Ci) plane' width='200' height='200'>
+        </a>
+        <figcaption>(Zi, Ci) plane</figcaption>
+      </figure>
+      </div>
+    </div>
+    </div>
+    
+    <br/>
+    <p>The following images have been generated using different values for Z<sub>0</sub>:</p>
+    
+    <div class='gallery-table'>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGram(Zr_.5,Zi_0).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGram(Zr_.5,Zi_0)_Thmb.jpg' alt='Zr0 = .5, Zi0 = 0' width='200' height='200'>
+        </a>
+        <figcaption>Zr<sub>0</sub> = .5, Zi<sub>0</sub> = 0</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGram(Zr_0,Zi_.5).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGram(Zr_0,Zi_.5)_Thmb.jpg' alt='Zr0 = 0, Zi0 = .5' width='200' height='200'>
+        </a>
+        <figcaption>Zr<sub>0</sub> = 0, Zi<sub>0</sub> = .5</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGram(Zr_.5,Zi_.5).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGram(Zr_.5,Zi_.5)_Thmb.jpg' alt='Zr0 = .5, Zi0 = .5' width='200' height='200'>
+        </a>
+        <figcaption>Zr<sub>0</sub> = .5, Zi<sub>0</sub> = .5</figcaption>
+      </figure>
+      </div>
+    </div>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGram(Zr_Cr,Zi_0).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGram(Zr_Cr,Zi_0)_Thmb.jpg' alt='Zr0 = Cr, Zi0 = 0' width='200' height='200'>
+        </a>
+        <figcaption>Zr<sub>0</sub> = Cr, Zi<sub>0</sub> = 0</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGram(Zr_0,Zi_Ci).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGram(Zr_0,Zi_Ci)_Thmb.jpg' alt='Zr0 = 0, Zi0 = Ci' width='200' height='200'>
+        </a>
+        <figcaption>Zr<sub>0</sub> = 0, Zi<sub>0</sub> = Ci</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGram(Zr_SqrtAbsCr,Zi_SqrtAbsCi).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGram(Zr_SqrtAbsCr,Zi_SqrtAbsCi)_Thmb.jpg' alt='Zr0 = sqrt(abs(Cr)), Zi0 = sqrt(abs(Ci))' width='200' height='200'>
+        </a>
+        <figcaption>Zr<sub>0</sub> = sqrt(abs(Cr))<br/>Zi<sub>0</sub> = sqrt(abs(Ci))</figcaption>
+      </figure>
+      </div>
+    </div>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGram(Zr_SinCi,Zi_SinCr).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGram(Zr_SinCi,Zi_SinCr)_Thmb.jpg' alt='Zr0 = sin(Ci), Zi0 = sin(Cr)' width='200' height='200'>
+        </a>
+        <figcaption>Zr<sub>0</sub> = sin(Ci), Zi<sub>0</sub> = sin(Cr)</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGram(Zr_SinCr,Zi_CosCi).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGram(Zr_SinCr,Zi_CosCi)_Thmb.jpg' alt='Zr0 = 0, Zi0 = Ci' width='200' height='200'>
+        </a>
+        <figcaption>Zr<sub>0</sub> = sin(Cr), Zi<sub>0</sub> = cos(Ci)</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGram(Zr_CosCr,Zi_CosCi).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGram(Zr_CosCr,Zi_CosCi)_Thmb.jpg' alt='Zr0 = cos(Cr), Zi0 = cos(Ci)' width='200' height='200'>
+        </a>
+        <figcaption>Zr<sub>0</sub> = cos(Cr), Zi<sub>0</sub> = cos(Ci)</figcaption>
+      </figure>
+      </div>
+    </div>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGram(Zr_CosCr,Zi_SinCi).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGram(Zr_CosCr,Zi_SinCi)_Thmb.jpg' alt='Zr0 = cos(Cr), Zi0 = sin(Ci)' width='200' height='200'>
+        </a>
+        <figcaption>Zr<sub>0</sub> = cos(Cr), Zi<sub>0</sub> = sin(Ci)</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGram(Z_Sin(complex(Ci,Cr))).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGram(Z_Sin(complex(Ci,Cr)))_Thmb.jpg' alt='Z0 = sin(complex(Ci, Cr i))' width='200' height='200'>
+        </a>
+        <figcaption>Z<sub>0</sub> = sin(complex(Ci, Cr i))</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGram(Zr_SinCr,Zi_SinCi).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGram(Zr_SinCr,Zi_SinCi)_Thmb.jpg' alt='Zr0 = sin(Cr), Zi0 = sin(Ci)' width='200' height='200'>
+        </a>
+        <figcaption>Zr<sub>0</sub> = sin(Cr), Zi<sub>0</sub> = sin(Ci)</figcaption>
+      </figure>
+      </div>
+    </div>
+    <div class='gallery-table-row'>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGram(Zr_Ci,%20Zi_Cr)(2).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGram(Zr_Ci, Zi_Cr)(2)_Thmb.jpg' alt='Zr0 = Ci, Zi0 = Cr' width='200' height='200'>
+        </a>
+        <figcaption>Zr<sub>0</sub> = Ci, Zi<sub>0</sub> = Cr</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGram(Zr_Ci,%20Zi_Cr).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGram(Zr_Ci, Zi_Cr)_Thmb.jpg' alt='Zr0 = Ci, Zi0 = Cr' width='200' height='200'>
+        </a>
+        <figcaption>Zr<sub>0</sub> = Ci, Zi<sub>0</sub> = Cr</figcaption>
+      </figure>
+      </div>
+      <div class='gallery-table-cell'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/BudaGram(Zr_-Cr,Zi_Ci).jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/BudaGram(Zr_-Cr,Zi_Ci)_Thmb.jpg' alt='Zr0 = -Cr, Zi0 = Ci' width='200' height='200'>
+        </a>
+        <figcaption>Zr<sub>0</sub> = -Cr, Zi<sub>0</sub> = Ci</figcaption>
+      </figure>
+      </div>
+    </div>
+    </div>
+    
+    <br/>
+    <p class='b'>Distance estimators</p>
+    
+    <p>The image below represents the distance from each point to the closest point in the Mandelbrot set.
+    Values outside M go brighter as they approach the border,
+    whereas values inside M go darker as they approach the border.</p>
+    
+    <div class='gallery-figure-box'>
+      <figure class='gallery-figure'>
+        <a href='/img/fractals/buddhabrot/MandelDistEst.jpg' target='_blank'>
+        <img src='/img/fractals/buddhabrot/MandelDistEst_Thmb.jpg' alt='Distance estimator' width='250' height='250'>
+        </a>
+      </figure>
+    </div>
+          
+    </div>
+    </div>
+    
+    </article>
+    <div class='main-footer bgg'>
+      <a href='/'><img src='/img/home/footer-mii.png' alt='Mii' title='Home' class='rnd-img bgw marlr10' width='60' height='60'></img></a>
+      <a id='email-link' href='#' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/gmail.png' alt='Gmail Albert Lobo' title='Gmail Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://www.linkedin.com/in/albert-lobo' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/linkedin.png' alt='LinkedIn Albert Lobo' title='LinkedIn Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://github.com/llop' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/github.png' alt='GitHub Albert Lobo' title='GitHub Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://www.npmjs.com/~llop' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/npm-sml.png' alt='npm Albert Lobo' title='npm Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://codeforces.com/profile/Llop' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/codeforces.png' alt='Codeforces Albert Lobo' title='Codeforces Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://www.youtube.com/user/albertlobo1981' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/youtube.png' alt='YouTube Albert Lobo' title='YouTube Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='http://www.smalltalkhub.com/#!/~Llop' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/smalltalkhub.png' alt='SmalltalkHub Albert Lobo' title='SmalltalkHub Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+    </div>
+  </main>
+</body>
+</html>
+
+
+
+
+

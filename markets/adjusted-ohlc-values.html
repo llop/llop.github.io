@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang='en'>
+<head>
+  <title>Calculating adjusted OHLC values</title>
+  <meta charset='UTF-8'>
+  <!-- inentionally left the next line out to fit the whole page width on mobile devices -->
+  <!-- meta name='viewport' content='width=device-width, initial-scale=1.0' -->
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1'>
+  <meta name='author' content='Albert Lobo'>
+  <meta name='description' content='Personal Website'>
+  <meta name='keywords' content='Programming, Fractals, Games, Markets'>
+  <link rel='icon' type='image/png' href='/img/favicon.png' />
+  <script src='/js/script.js'></script>
+  <link rel='stylesheet' href='/css/style.css'>
+  <link rel='stylesheet' href='/js/highlightjs/styles/hybrid.css'>
+  <script src='/js/highlightjs/highlight.pack.js'></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+<body>
+  <div class='navbar-wrapper'>
+    <nav class='navbar' role='navigation'>
+      <a href='/'><div class='navbar-home'>Albert Lobo</div></a>
+      <div class='navbar-menu'>
+        <div id='general-nav' class='nav-item'>
+          <div class='i5'></div><a href='/general'>General</a>
+          <div id='general-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/general/animated-penrose-triangle'>Make an animated Penrose triangle in Javascript + HTML</a></div>
+          </div>
+        </div>
+        <div id='fractals-nav' class='nav-item'>
+          <div class='i5'></div><a href='/fractals'>Fractals</a>
+          <div id='fractals-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/fractals/buddhabrot-4d-viewer'>Buddhabrot 4D viewer</a></div>
+            <div class='nav-subitem'><a href='/fractals/buddhabrot-gallery'>Buddhabrot gallery</a></div>
+            <div class='nav-subitem'><a href='/fractals/mandelbrot-viewer'>Mandelbrot viewer</a></div>
+            <div class='nav-subitem'><a href='/fractals/interior-exterior-distance-bounds-mandelbrot-set'>Interior and exterior distance bounds for the Mandelbrot set</a></div>
+            <div class='nav-subitem'><a href='/fractals/async-await-requestanimationframe-buddhabrot'>Using javascript's async/await and requestAnimationFrame to paint the Buddhabrot</a></div>
+          </div>
+        </div>
+        <div id='games-nav' class='nav-item'>
+          <div class='i5'></div><a href='/games'>Games</a>
+          <div id='games-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/games/tetris'>Tetris</a></div>
+          </div>
+        </div>
+        <div id='markets-nav' class='nav-item'>
+          <div class='i5'></div><a href='/markets'>Markets</a>
+          <div id='markets-dropdown' class='nav-dropdown'>
+            <div class='nav-subitem'><a href='/markets/adjusted-ohlc-values'>Calculating adjusted OHLC values</a></div>
+          </div>
+        </div>
+        <div class='nav-item'><div class='i5'></div><a href='/about'>About</a></div>
+      </div>
+    </nav>
+    </div>
+  <main class='main'>
+    
+    <article class='main-text'>
+      <div class='main-text-block main-text-title bgg'>
+        <div class='text-box'>
+          <h1>Calculating adjusted OHLC values</h1>
+          <p class='article-date'>Updated September, 2022</p>
+        </div>
+      </div>
+      <div class='main-text-block bgw'>
+        <div class='text-box'> 
+
+          <p>This article describes a general procedure to calculate adjusted OHLC values for a time series, 
+            and provides its implementation.</p>
+
+          <p>I was motivated to investigate this after reading Giulio Botazzi's <a href='http://cafim.sssup.it/~giulio/other/alpha_vantage/index.html' target='_blank'>
+            Download historical data using Alpha Vantage</a>, which offers great insight into this matter.</p>
+          
+          <br/>
+          <p class='b'>Software</p>
+          
+          <p>Sample implementation written in <a href='https://www.python.org/' target='_blank'>Python</a>; required packages:</p>
+          <ul>
+            <li><a href='https://requests.readthedocs.io/en/master/' target='_blank'>requests</a></li>
+            <li><a href='https://matplotlib.org/' target='_blank'>matplotlib</a></li>
+            <li><a href='https://pandas.pydata.org/' target='_blank'>pandas</a></li>
+          </ul>
+          
+          <p>I also recommend using a <a href='https://jupyter.org/' target='_blank'>Jupyter notebook</a> to try out the code.</p>
+          
+          <br/>
+          <p class='b'>Stock price data</p>
+
+          <p>Free data provided by <a href='https://www.alphavantage.co/' target='_blank'>Alpha Vantage</a>.</p>
+
+          <br/>
+          <p class='b'>Adjustment methodology</p>
+
+          <p>We'll be using the standard Boston <a href='http://www.crsp.org/products/documentation/crsp-calculations' target='_blank'>CRSP method</a>.
+            The idea is to calculate an adjustent factor to account for both splits and dividend hand-outs. 
+            We can then use these multipliers to calculate adjusted OHLC values; for instance:</p>
+
+          <p class="padlr40"><i>adjusted close = close * split factor * dividend factor</i></p>
+
+          <p>These adjustment factors compound over time, so we should calculate them iteratively going back in time:</p>
+
+          <p class="padlr40"><i>adjustment factor<sub>today</sub> = f<sub>tomorrow</sub> * adjustment factor<sub>tomorrow</sub><br />
+          f<sub>i</sub> = split or dividends factor for day i</i></p>
+
+          <br/>
+          <p class='b'>Implementation</p>
+          
+          <p>Start by importing the necessary libraries.</p>
+
+          <pre><code class='python code'>
+import requests
+import csv
+import pandas as pd
+          </code></pre>
+
+          <br/>
+          <p class='b'>Get price data</p>
+          
+          <p>Add your Alpha Vantage API key here.</p>
+
+          <pre><code class='python code'>
+API_KEY = 'my-alpha-vantage-api-key'
+          </code></pre>
+          
+          <p>Download full historical daily price data for IBM.</p>
+
+          <pre><code class='python code'>
+symbol = 'IBM'
+url = 'https://www.alphavantage.co/query?' \
+    'function=TIME_SERIES_DAILY_ADJUSTED&datatype=csv&outputsize=full&' \
+    f'symbol={symbol}&apikey={API_KEY}'
+response = requests.get(url)                           # issue request
+response_text = response.content.decode('utf-8')       # get response text
+csv_reader = csv.reader(response_text.splitlines())    # init csv reader
+time_series = [ row for row in csv_reader ][1:]        # skip column names row
+          </code></pre>
+
+          <p>The resulting <b><code>time_series</code></b> is just an array where each item holds price data for one day.
+            This daily data is also an array with the following fields:</p>
+
+          <ol start="0">
+            <li><code>timestamp</code></li>
+            <li><code>open</code></li>
+            <li><code>high</code></li>
+            <li><code>low</code></li>
+            <li><code>close</code></li>
+            <li><code>adjusted_close</code></li>
+            <li><code>volume</code></li>
+            <li><code>dividend_amount</code></li>
+            <li><code>split_coefficient</code></li>
+          </ol>
+
+          <p class='b'><code>split_coefficient</code></p>
+          <p>The <i>new-number-of-shares</i> to <i>old-number-of-shares</i> ratio.
+          This value is different than one only on split dates; 
+          i.e. on days the price and shares were adjusted for the split.</p>
+
+          <p class='b'><code>dividend_amount</code></p>
+          <p>The per-share value of dividends paid. 
+            Stocks start trading without their dividends on the 
+            <a href='https://www.investopedia.com/terms/e/ex-dividend.asp' target='_blank'>ex-dividend date</a>,
+            so only on these days will the <code>dividend_amount</code> be different than zero.</p>
+
+          <br/>
+          <p class='b'>Calculate adjustment factors</p>
+          
+          <p>In this next part, we'll be adding 2 more columns to our <code>time_series</code>:</p>
+
+          <ol start="9">
+            <li><code>split_factor</code></li>
+            <li><code>dividend_factor</code></li>
+          </ol>
+
+          <p>Note that Alpha Vantage's data is in reverse chronological order.</p>
+
+          <pre><code class='python code'>
+# for the most recent day, split_factor = dividend_factor = 1
+split_factor = 1
+dividend_factor = 1
+
+# append split_factor and dividend_factor columns to most recent day
+time_series[0].append(split_factor)
+time_series[0].append(dividend_factor)
+
+# calculate for the rest of the time series 
+for i in range(1, len(time_series)):
+
+    today = time_series[i]                     # current day
+    tomorrow = time_series[i - 1]              # day chronologically after
+
+    dividend_amount = float(tomorrow[7])       # dividends and split coefficient
+    split_coefficient = float(tomorrow[8])     # AlphaVantage columns 7 and 8, 0-based index
+
+    # recalculate split factor for current day
+    split_factor /= split_coefficient
+
+    # recalculate dividends factor
+    close = float(today[4])
+    dividend_factor *= (close - dividend_amount) / close
+
+    # add split_factor and dividend_factor columns 
+    today.append(split_factor)
+    today.append(dividend_factor)
+          </code></pre>
+
+          <br/>
+          <p class='b'>Calculate OHLC adjusted values</p>
+          
+          <p>Let's calculate the adjusted close as an example, and add it as another column in our <code>time_series</code>:</p>
+
+          <ol start="11">
+            <li><code>my_adjusted_close</code></li>
+          </ol>
+
+          <pre><code class='python code'>
+for i in range(0, len(time_series)):
+    today = time_series[i]
+    close = float(today[4])        # current day's close
+    split_factor = today[9]        # split and dividend factors in new columns 9 and 10
+    dividend_factor = today[10]
+    
+    # factor in split and dividends for adjusted close value
+    # should be equal to AlphaVantage's adjusted_close in column 5
+    my_adjusted_close = close * split_factor * dividend_factor
+    today.append(my_adjusted_close)
+          </code></pre>
+
+          <br/>
+          <p class='b'>Plot the <code>time_series</code></p>
+
+          <p>Let's get the data in the proper chronological order.</p>
+
+          <pre><code class='python code'>
+time_series.reverse()
+          </code></pre>
+          
+          <p>Then, prepare a pandas dataframe.</p>
+
+          <pre><code class='python code'>
+columns = [ 'timestamp', 'open', 'high', 'low', 'close', 'adjusted_close', 
+            'volume', 'dividend_amount', 'split_coefficient', 
+            'split_factor', 'dividend_factor', 'my_adjusted_close' ]
+
+df = pd.DataFrame(time_series, columns = columns)           # create data frame
+df = df.set_index('timestamp')                              # set timestamp as index
+df['close'] = df['close'].astype(float)                     # cast close and adjusted_close
+df['adjusted_close'] = df['adjusted_close'].astype(float)   # need type float to plot
+          </code></pre>
+
+          <p>We can now plot <code>close</code>, <code>adjusted_close</code> (Alpha Vantage), and <code>my_adjusted_close</code>.</p>
+
+          <pre><code class='python code'>
+df[['close', 'adjusted_close', 'my_adjusted_close']].plot(figsize = (16, 8));
+          </code></pre>
+
+          <figure class='talc'>
+            <img src='/img/markets/adjusted-price-values/my-adjusted-close-ibm.png' 
+              alt='IBM historical daily close and adjusted close values' width='933' height='480'></img>
+            <figcaption>Fig. 1 - IBM historical daily close and adjusted close values</figcaption>
+          </figure>
+          
+          <p>Alpha Vantage's <code>adjusted_close</code> and <code>my_adjusted_close</code> are overlapping. 
+            Let's get a close-up of the first 16 data points and compare the values.</p>
+
+          <figure class='talc'>
+            <img src='/img/markets/adjusted-price-values/my-adjusted-close-ibm-0-16.png' 
+              alt='First few IBM historical daily adjusted close values' width='926' height='480'></img>
+            <figcaption>Fig. 2 - First few IBM historical daily adjusted close values</figcaption>
+          </figure>
+            
+          <p>Alpha Vantage states they are also using the CRSP approach in their 
+            <a href='https://www.alphavantage.co/support/#support' target='_blank'>support page</a>, so that checks out.</p>
+            
+          <br/>
+          <p class='b'>Alternative calculation method?</p>
+          
+          <p>If we try the above procedure to calculate adjusted close values for Microsoft (MSFT), we get the following result:</p>
+
+          <figure class='talc'>
+            <img src='/img/markets/adjusted-price-values/my-adjusted-close-msft-0-16.png' 
+              alt='First few MSFT historical daily adjusted close values' width='936' height='480'></img>
+            <figcaption>Fig. 3 - First few MSFT historical daily adjusted close values</figcaption>
+          </figure>
+
+          <p>I was tempted to disregard the difference as just a rounding error. 
+            However, if we were to calculate the <code>dividend_factor</code> using the next day's open value instead of the previous close...</p>
+            
+          <pre><code class='python code'>
+    # recalculate dividends factor
+    open_price = float(tomorrow[1])
+    dividend_factor *= open_price / (dividend_amount + open_price)
+          </code></pre>
+
+          <figure class='talc'>
+            <img src='/img/markets/adjusted-price-values/my-adjusted-close-msft-0-16-alt.png' 
+              alt='First few MSFT historical daily adjusted close values (alt calculation)' width='936' height='480'></img>
+            <figcaption>Fig. 4 - First few MSFT historical daily adjusted close values (alt calculation)</figcaption>
+          </figure>
+
+          <p>It looks like Alpha Vantage is using another formula in this case. Go figure.</p>
+
+          <br/>
+          <p class='b'>Appendix: Adjusted shares and volume</p>
+
+          <p>We need to use the inverse adjustment factor for the number of shares and volume.</p>
+
+          <pre><code class='python code'>
+for i in range(0, len(time_series)):
+    today = time_series[i]
+    volume = float(today[6])       # current day's volume
+    split_factor = today[9]
+    dividend_factor = today[10]
+    
+    # apply inverse adjustment factor for volume
+    my_adjusted_volume = volume / (split_factor * dividend_factor)
+    today.append(my_adjusted_volume)
+          </code></pre>
+
+          <br/>
+          <p class='b'>Conclusion</p>
+
+          <p>For consistency, calculate your own adjusted OHLC values for technical analysis.</p>
+          
+        </div>
+      </div>
+    </article>
+    
+    <div class='main-footer bgg'>
+      <a href='/'><img src='/img/home/footer-mii.png' alt='Mii' title='Home' class='rnd-img bgw marlr10' width='60' height='60'></img></a>
+      <a id='email-link' href='#' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/gmail.png' alt='Gmail Albert Lobo' title='Gmail Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://www.linkedin.com/in/albert-lobo' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/linkedin.png' alt='LinkedIn Albert Lobo' title='LinkedIn Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://github.com/llop' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/github.png' alt='GitHub Albert Lobo' title='GitHub Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://www.npmjs.com/~llop' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/npm-sml.png' alt='npm Albert Lobo' title='npm Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://codeforces.com/profile/Llop' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/codeforces.png' alt='Codeforces Albert Lobo' title='Codeforces Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='https://www.youtube.com/user/albertlobo1981' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/youtube.png' alt='YouTube Albert Lobo' title='YouTube Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+      <a href='http://www.smalltalkhub.com/#!/~Llop' target='_blank' rel='noopener noreferrer'>
+          <img src='/img/home/smalltalkhub.png' alt='SmalltalkHub Albert Lobo' title='SmalltalkHub Albert Lobo' class='dib padlr5' width='52' height='32'></img></a>
+    </div>
+  </main>
+</body>
+</html>
+
+
+
+
+
